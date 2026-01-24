@@ -1,0 +1,24 @@
+{
+  "name": "nodejs-monorepo",
+  "version": "1.0.0",
+  "description": "NodeJS Monorepo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com-maxondev-personal:maxonchickdev/nodejs-monorepo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "packages/shared",
+    "apps/web",
+    "apps/backend"
+  ],
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
