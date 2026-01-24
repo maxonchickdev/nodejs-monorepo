@@ -1,12 +1,10 @@
 {
   "name": "@nodejs-monorepo/shared",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "@nodejs-monorepo/shared library",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "keywords": [],
-  "author": "",
+  "author": "maxondev",
   "license": "ISC"
 }
