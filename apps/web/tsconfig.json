@@ -1,12 +1,20 @@
 {
-    "extends": "../../tsconfig.base.json",
-    "compilerOptions": {
-        "outDir": "./dist",
-        "rootDir": "./src"
-    },
-    "references": [
-        {
-            "path": "../../packages/shared"
-        }
-    ]
+  "compilerOptions": {
+    "target": "es2022",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "module": "esnext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "composite": true
+  },
+  "include": [
+    "src/**/*",
+    "vite.config.ts"
+  ]
 }

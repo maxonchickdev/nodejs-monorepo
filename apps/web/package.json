@@ -2,10 +2,25 @@
   "name": "@nodejs-monorepo/web",
   "version": "1.0.0",
   "description": "@nodejs-monorepo/web application",
-  "main": "dist/index.js",
-  "author": "maxondev",
+  "type": "module",
+  "private": true,
   "license": "ISC",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
+  },
   "dependencies": {
-    "@nodejs-monorepo/shared": "^1.0.0"
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.9",
+    "@types/react": "^19.2.9",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react-swc": "^4.2.2",
+    "globals": "^16.5.0",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.1"
   }
 }

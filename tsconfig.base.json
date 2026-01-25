@@ -1,21 +1,12 @@
 {
     "compilerOptions": {
-        "target": "es2020",
-        "module": "node16",
-        "sourceMap": true,
+        "target": "es2022",
         "strict": true,
-        "moduleResolution": "node16",
         "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true,
-        "composite": true,
-        "declaration": true,
-        "declarationMap": true,
-        "incremental": true,
         "skipLibCheck": true,
-        "noEmitOnError": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "allowSyntheticDefaultImports": true,
-        "useDefineForClassFields": true
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "moduleResolution": "nodenext",
+        "module": "nodenext"
     }
 }
