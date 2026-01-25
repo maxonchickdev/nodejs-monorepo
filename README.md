@@ -1,3 +1,1 @@
-# nodejs-monorepo
-
-NodeJS Monorepo
+# NodeJS Monorepo
