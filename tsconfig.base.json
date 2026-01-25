@@ -12,6 +12,10 @@
         "declarationMap": true,
         "incremental": true,
         "skipLibCheck": true,
-        "noEmitOnError": true
+        "noEmitOnError": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "useDefineForClassFields": true
     }
 }

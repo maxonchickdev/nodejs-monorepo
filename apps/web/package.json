@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "@nodejs-monorepo/web application",
   "main": "dist/index.js",
-  "keywords": [],
   "author": "maxondev",
   "license": "ISC",
   "dependencies": {
