@@ -7,7 +7,7 @@
     "moduleResolution": "nodenext",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "declaration": true,
+    "declaration": true
   },
   "include": ["src/**/*"],
   "exclude": ["dist"]

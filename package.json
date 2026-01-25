@@ -14,7 +14,19 @@
     "apps/web",
     "apps/backend"
   ],
+  "scripts": {
+    "format:check": "prettier . -c",
+    "format:fix": "prettier . -w",
+    "hooks:init": "simple-git-hooks",
+    "hooks:precommit": "lint-staged && knip && node_modules/.bin/ls-lint",
+    "hooks:prepush": "npm run build -w apps/web && npm run build -w apps/backend"
+  },
   "devDependencies": {
+    "@commitlint/cli": "^20.3.1",
+    "@commitlint/config-conventional": "^20.3.1",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.8.1",
+    "simple-git-hooks": "^2.13.1",
     "typescript": "^5.9.3"
   }
 }
