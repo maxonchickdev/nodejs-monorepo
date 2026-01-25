@@ -25,7 +25,6 @@ const config: KnipConfig = {
     '@commitlint/cli',
     '@commitlint/types',
   ],
-  ignoreBinaries: ['knip', 'ls-lint'],
   typescript: {
     config: [
       'tsconfig.base.json',
