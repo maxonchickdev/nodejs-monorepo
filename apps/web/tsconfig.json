@@ -1,17 +1,14 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "target": "es2022",
+    "outDir": "./dist",
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "module": "esnext",
-    "skipLibCheck": true,
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "strict": true,
-    "composite": true
   },
   "include": [
     "src/**/*",
