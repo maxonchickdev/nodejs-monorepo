@@ -4,7 +4,12 @@
   "description": "@nodejs-monorepo/shared library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "keywords": [],
   "author": "maxondev",
-  "license": "ISC"
+  "license": "ISC",
+  "scripts": {
+    "lint:check": "eslint --max-warnings=0",
+    "lint:fix": "eslint --fix",
+    "format:check": "prettier -c",
+    "format:fix": "prettier -w"
+  }
 }

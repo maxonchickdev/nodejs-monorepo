@@ -15,12 +15,14 @@
     "apps/backend"
   ],
   "scripts": {
-    "format:check": "prettier . -c",
-    "format:fix": "prettier . -w",
-    "lint:check": "eslint",
-    "lint:fix": "eslint --fix",
+    "format:check": "prettier . -c --config prettier.config.ts",
+    "format:fix": "prettier . -w --config prettier.config.ts",
+    "lint:check": "eslint --max-warnings=0 -c eslint.config.ts",
+    "lint:fix": "eslint --fix -c eslint.config.ts",
+    "lint:filesystem": "node_modules/.bin/ls-lint -config .ls-lint.yml",
+    "lint:clean": "knip -c knip.config.ts",
     "hooks:init": "simple-git-hooks",
-    "hooks:precommit": "lint-staged && knip && node_modules/.bin/ls-lint",
+    "hooks:precommit": "lint-staged -c lint-staged.config.ts",
     "hooks:prepush": "npm run build -w apps/web && npm run build -w apps/backend"
   },
   "devDependencies": {
