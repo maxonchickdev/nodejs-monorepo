@@ -15,11 +15,11 @@
     "apps/backend"
   ],
   "scripts": {
-    "format:check": "prettier . -c --config prettier.config.ts",
-    "format:fix": "prettier . -w --config prettier.config.ts",
+    "lint:format:check": "prettier . -c --config prettier.config.ts",
+    "lint:format:fix": "prettier . -w --config prettier.config.ts",
     "lint:check": "eslint --max-warnings=0 -c eslint.config.ts",
     "lint:fix": "eslint --fix -c eslint.config.ts",
-    "lint:filesystem": "node_modules/.bin/ls-lint -config .ls-lint.yml",
+    "lint:filesystem": "ls-lint -config .ls-lint.yml",
     "lint:clean": "knip -c knip.config.ts",
     "hooks:init": "simple-git-hooks",
     "hooks:precommit": "lint-staged -c lint-staged.config.ts",
@@ -30,6 +30,8 @@
     "@commitlint/config-conventional": "^20.3.1",
     "@ls-lint/ls-lint": "^2.3.1",
     "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
     "knip": "^5.82.1",
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",

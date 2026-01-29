@@ -1,19 +1,20 @@
 import { defineConfig } from 'eslint/config';
 import tseslint from 'typescript-eslint';
+import eslintConfigPrettier from 'eslint-config-prettier/flat';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 
 export default defineConfig([
-  tseslint.configs.base,
   {
-    name: 'ESLint ignores',
-    ignores: [
-      'apps/web/dist',
-      'apps/backend/dist',
-      'packages/shared/dist',
-      'node_modules',
-    ],
+    name: 'Ignores',
+    ignores: ['**/dist/**'],
   },
   {
-    name: 'ESLint files',
+    name: 'Files',
     files: ['**/*.ts', '**/*.tsx'],
+    extends: [
+      tseslint.configs.recommended,
+      eslintConfigPrettier,
+      eslintPluginPrettierRecommended,
+    ],
   },
 ]);

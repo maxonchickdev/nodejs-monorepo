@@ -9,7 +9,7 @@
   "scripts": {
     "lint:check": "eslint --max-warnings=0 -c $(npm prefix)/eslint.config.ts",
     "lint:fix": "eslint --fix -c $(npm prefix)/eslint.config.ts",
-    "format:check": "prettier -c --config $(npm prefix)/prettier.config.ts",
-    "format:fix": "prettier -w --config $(npm prefix)/prettier.config.ts"
+    "lint:format:check": "prettier -c --config $(npm prefix)/prettier.config.ts",
+    "lintformat:fix": "prettier -w --config $(npm prefix)/prettier.config.ts"
   }
 }
