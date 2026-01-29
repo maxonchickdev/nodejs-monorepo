@@ -1,4 +1,0 @@
-{
-  "pre-commit": "npm run hooks:precommit",
-  "pre-push": "npm run hooks:prepush"
-}

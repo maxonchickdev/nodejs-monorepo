@@ -140,3 +140,6 @@ vite.config.ts.timestamp-*
 
 # Builds info
 **/tsconfig.tsbuildinfo
+
+# Editor
+.vscode

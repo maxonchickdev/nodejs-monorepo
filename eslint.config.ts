@@ -3,18 +3,37 @@ import tseslint from 'typescript-eslint';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 
+const globalIgnores: string[] = [
+  '**/dist/**',
+  '**/node_modules/**',
+  '**/*.d.ts',
+  '**/.git/**',
+];
+
+const globalExtends = [
+  tseslint.configs.recommended,
+  eslintConfigPrettier,
+  eslintPluginPrettierRecommended,
+];
+
 export default defineConfig([
   {
-    name: 'Ignores',
-    ignores: ['**/dist/**'],
+    name: 'Global ignores',
+    ignores: globalIgnores,
   },
   {
-    name: 'Files',
-    files: ['**/*.ts', '**/*.tsx'],
-    extends: [
-      tseslint.configs.recommended,
-      eslintConfigPrettier,
-      eslintPluginPrettierRecommended,
-    ],
+    name: 'Backend application',
+    files: ['apps/backend/src/**/*.ts'],
+    extends: globalExtends,
+  },
+  {
+    name: 'Web application',
+    files: ['apps/web/src/**/*.{ts,tsx}'],
+    extends: globalExtends,
+  },
+  {
+    name: 'Shared package',
+    files: ['packages/shared/src/**/*.ts'],
+    extends: globalExtends,
   },
 ]);
