@@ -9,6 +9,7 @@
   "keywords": [],
   "author": "maxondev",
   "license": "ISC",
+  "private": true,
   "workspaces": [
     "packages/shared",
     "apps/web",
@@ -23,7 +24,7 @@
     "lint:clean": "knip -c knip.config.ts",
     "hooks:init": "simple-git-hooks",
     "hooks:precommit": "lint-staged -c lint-staged.config.ts",
-    "hooks:prepush": "npm run build -w apps/web && npm run build -w apps/backend"
+    "hooks:prepush": "npm run build -w apps/web && npm run build -w apps/backend && npm run build -w packages/shared"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.3.1",
