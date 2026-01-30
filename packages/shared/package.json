@@ -9,9 +9,9 @@
   "license": "ISC",
   "scripts": {
     "build": "tsc -b",
-    "lint:check": "eslint --max-warnings=0 -c $(npm prefix)/eslint.config.ts",
-    "lint:fix": "eslint --fix -c $(npm prefix)/eslint.config.ts",
-    "lint:format:check": "prettier -c --config $(npm prefix)/prettier.config.ts",
-    "lintformat:fix": "prettier -w --config $(npm prefix)/prettier.config.ts"
+    "lint:check": "eslint --max-warnings=0",
+    "lint:fix": "eslint --fix",
+    "lint:format:check": "prettier . -c",
+    "lintformat:fix": "prettier . -w"
   }
 }
