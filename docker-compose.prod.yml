@@ -1,0 +1,139 @@
+services:
+  nodejs-monorepo-postgres:
+    container_name: nodejs-monorepo-postgres
+    image: postgres:17.5-alpine3.22
+    restart: always
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    volumes:
+      - nodejs-monorepo-postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      PGUSER: ${POSTGRES_USER}
+    env_file: .env.prod
+    networks:
+      - nodejs-monorepo-network
+    healthcheck:
+      test: pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    hostname: nodejs-monorepo-postgres
+
+  nodejs-monorepo-redis:
+    container_name: nodejs-monorepo-redis
+    image: redis:8.0.2-alpine
+    restart: unless-stopped
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+    volumes:
+      - nodejs-monorepo-redis-data:/data
+    environment:
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_DATABASES: ${REDIS_DATABASES}
+    env_file: .env.prod
+    networks:
+      - nodejs-monorepo-network
+    healthcheck:
+      test: redis-cli -a $REDIS_PASSWORD ping
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    hostname: nodejs-monorepo-redis
+
+  nodejs-monorepo-redis-insight:
+    container_name: nodejs-monorepo-redis-insight
+    image: redislabs/redisinsight:latest
+    restart: always
+    depends_on:
+      nodejs-monorepo-redis:
+        condition: service_healthy
+    ports:
+      - ${RI_PORT}:${RI_PORT}
+    volumes:
+      - nodejs-monorepo-redis-insight-data:/usr/src/app/redisinsight/api/data
+    environment:
+      REDISINSIGHT_DISABLE_ENCRYPTION: ${RI_DISABLE_ENCRYPTION}
+    env_file: .env.prod
+    networks:
+      - nodejs-monorepo-network
+    command: |
+      sh -c " mkdir -p /usr/src/app/redisinsight/api/data && chown -R node:node /usr/src/app/redisinsight/api/data && ./docker-entry.sh "
+    hostname: nodejs-monorepo-redis-insight
+    user: "0:0"
+
+  # nodejs-monorepo-kafka-broker:
+  #   container_name: nodejs-monorepo-kafka-broker
+  #   image: apache/kafka:latest
+  #   ports:
+  #     - ${KAFKA_PORT}:${KAFKA_PORT}
+  #     - ${KAFKA_CONTROLLER_PORT}:${KAFKA_CONTROLLER_PORT}
+  #   environment:
+  #     KAFKA_NODE_ID: ${KAFKA_NODE_ID}
+  #     KAFKA_PROCESS_ROLES: broker,controller
+  #     KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:${KAFKA_PORT},CONTROLLER://0.0.0.0:${KAFKA_CONTROLLER_PORT}
+  #     KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://nodejs-monorepo-kafka-broker:${KAFKA_PORT}
+  #     KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+  #     KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+  #     KAFKA_CONTROLLER_QUORUM_VOTERS: ${KAFKA_NODE_ID}@nodejs-monorepo-kafka-broker:${KAFKA_CONTROLLER_PORT}
+  #     KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: ${KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR}
+  #     KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: ${KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR}
+  #     KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: ${KAFKA_TRANSACTION_STATE_LOG_MIN_ISR}
+  #     KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: ${KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS}
+  #     KAFKA_NUM_PARTITIONS: ${KAFKA_NUM_PARTITIONS}
+  #   env_file: .env
+  #   networks:
+  #     - nodejs-monorepo-network
+  #   hostname: nodejs-monorepo-kafka-broker
+
+  # nodejs-monorepo-kafka-ui:
+  #   container_name: nodejs-monorepo-kafka-ui
+  #   image: provectuslabs/kafka-ui:latest
+  #   depends_on:
+  #     - nodejs-monorepo-kafka-broker
+  #   ports:
+  #     - ${KAFKA_UI_PORT}:${KAFKA_UI_PORT}
+  #   environment:
+  #     KAFKA_CLUSTERS_0_NAME: local
+  #     KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: nodejs-monorepo-kafka-broker:${KAFKA_PORT}
+  #   env_file: .env
+  #   networks:
+  #     - nodejs-monorepo-network
+  #   hostname: nodejs-monorepo-kafka-ui
+
+  nodejs-monorepo:
+    container_name: nodejs-monorepo
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      nodejs-monorepo-postgres:
+        condition: service_healthy
+      nodejs-monorepo-redis:
+        condition: service_healthy
+    env_file: .env.prod
+    networks:
+      - nodejs-monorepo-network
+    hostname: nodejs-monorepo
+
+volumes:
+  nodejs-monorepo-postgres-data:
+    name: nodejs-monorepo-postgres-data
+    driver: local
+  nodejs-monorepo-redis-data:
+    name: nodejs-monorepo-redis-data
+    driver: local
+  nodejs-monorepo-redis-insight-data:
+    name: nodejs-monorepo-redis-insight-data
+    driver: local
+
+networks:
+  nodejs-monorepo-network:
+    name: nodejs-monorepo-network
+    driver: bridge
+    attachable: true
