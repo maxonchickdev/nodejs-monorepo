@@ -2,7 +2,8 @@ import { type Configuration } from 'lint-staged';
 
 const config: Configuration = {
   '*': [
-    (): string => "concurrently 'npm run lint:filesystem' 'npm run lint:clean'",
+    (): string =>
+      "concurrently 'npm run lint:filesystem' 'npm run lint:clean' 'npm run lint:editor'",
   ],
   'apps/web/src/**/*.{ts,tsx}': [
     (): string => 'npm run lint:check -w apps/web',

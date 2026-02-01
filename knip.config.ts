@@ -19,9 +19,6 @@ const config: KnipConfig = {
   ignoreDependencies: [
     '@types/express',
     'source-map-support',
-    'ts-loader',
-    'ts-node',
-    'tsconfig-paths',
     '@commitlint/cli',
     '@commitlint/types',
   ],
