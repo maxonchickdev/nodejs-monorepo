@@ -1,19 +1,12 @@
 import { defineConfig } from 'eslint/config';
 import tseslint from 'typescript-eslint';
-import eslintConfigPrettier from 'eslint-config-prettier/flat';
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 
 const globalIgnores: string[] = [
   '**/dist/**',
   '**/node_modules/**',
   '**/*.d.ts',
   '**/.git/**',
-];
-
-const globalExtends = [
-  tseslint.configs.recommended,
-  eslintConfigPrettier,
-  eslintPluginPrettierRecommended,
+  'apps/backend/prisma/generated',
 ];
 
 export default defineConfig([
@@ -22,18 +15,8 @@ export default defineConfig([
     ignores: globalIgnores,
   },
   {
-    name: 'Backend application',
-    files: ['apps/backend/src/**/*.ts'],
-    extends: globalExtends,
-  },
-  {
-    name: 'Web application',
-    files: ['apps/web/src/**/*.{ts,tsx}'],
-    extends: globalExtends,
-  },
-  {
-    name: 'Shared package',
-    files: ['packages/shared/src/**/*.ts'],
-    extends: globalExtends,
+    name: 'Applications & Packages',
+    files: ['apps/backend/src/**/*.ts', 'apps/web/src/**/*.{ts,tsx}', 'packages/shared/src/**/*.ts'],
+    extends: tseslint.configs.recommended,
   },
 ]);

@@ -10,6 +10,7 @@
   "author": "maxondev",
   "license": "ISC",
   "private": true,
+  "type": "module",
   "workspaces": [
     "packages/shared",
     "apps/web",
@@ -35,6 +36,11 @@
     "docker:prod:start": "docker compose -f docker-compose.prod.yml start",
     "docker:prod:stop": "docker compose -f docker-compose.prod.yml stop -t 10"
   },
+  "overrides": {
+    "@nestjs/common": "^11.1.12",
+    "@nestjs/core": "^11.1.12",
+    "@nestjs/platform-express": "^11.1.12"
+  },
   "devDependencies": {
     "@commitlint/cli": "^20.3.1",
     "@commitlint/config-conventional": "^20.3.1",
@@ -42,8 +48,6 @@
     "concurrently": "^9.2.1",
     "editorconfig-checker": "^6.1.1",
     "eslint": "^9.39.2",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.5",
     "knip": "^5.82.1",
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
