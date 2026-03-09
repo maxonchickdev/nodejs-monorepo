@@ -36,6 +36,11 @@
     "docker:prod:start": "docker compose -f docker-compose.prod.yml start",
     "docker:prod:stop": "docker compose -f docker-compose.prod.yml stop -t 10"
   },
+  "overrides": {
+    "@nestjs/common": "^11.1.12",
+    "@nestjs/core": "^11.1.12",
+    "@nestjs/platform-express": "^11.1.12"
+  },
   "devDependencies": {
     "@commitlint/cli": "^20.3.1",
     "@commitlint/config-conventional": "^20.3.1",
