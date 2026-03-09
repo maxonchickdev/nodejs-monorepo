@@ -10,6 +10,7 @@
   "author": "maxondev",
   "license": "ISC",
   "private": true,
+  "type": "module",
   "workspaces": [
     "packages/shared",
     "apps/web",
@@ -42,8 +43,6 @@
     "concurrently": "^9.2.1",
     "editorconfig-checker": "^6.1.1",
     "eslint": "^9.39.2",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.5",
     "knip": "^5.82.1",
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",

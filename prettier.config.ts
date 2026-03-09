@@ -1,12 +1,12 @@
 import { type Config } from 'prettier';
 
-const config: Config = {
+export const config: Config = {
   arrowParens: 'always',
   bracketSpacing: true,
   semi: true,
   useTabs: false,
   trailingComma: 'all',
-  singleQuote: true,
+  singleQuote: false,
   tabWidth: 2,
   endOfLine: 'lf',
   printWidth: 80,
@@ -15,5 +15,3 @@ const config: Config = {
   embeddedLanguageFormatting: 'auto',
   htmlWhitespaceSensitivity: 'strict',
 };
-
-export default config;
