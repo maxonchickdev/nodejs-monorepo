@@ -144,4 +144,5 @@ vite.config.ts.timestamp-*
 # Editor
 .vscode
 
+# Prisma
 apps/backend/prisma/generated

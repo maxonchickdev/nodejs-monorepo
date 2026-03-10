@@ -11,7 +11,7 @@
     "build": "tsc -b",
     "lint:check": "eslint --max-warnings=0",
     "lint:fix": "eslint --fix",
-    "lint:format:check": "prettier . -c",
-    "lintformat:fix": "prettier . -w"
+    "lint:format:check": "prettier . -c --config ../../prettier.config.ts --ignore-path ../../.prettierignore",
+    "lint:format:fix": "prettier . -w --config ../../prettier.config.ts --ignore-path ../../.prettierignore"
   }
 }
