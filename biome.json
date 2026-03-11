@@ -36,6 +36,9 @@
 				"useRequiredScripts": "error"
 			},
 			"recommended": true,
+			"style": {
+				"useImportType": "off"
+			},
 			"suspicious": {
 				"noBiomeFirstException": "error",
 				"noConsole": {

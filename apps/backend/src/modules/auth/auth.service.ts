@@ -1,11 +1,11 @@
 import { ConflictException, Injectable } from "@nestjs/common";
-import type { ConfigService } from "@nestjs/config";
-import type { JwtService } from "@nestjs/jwt";
+import { ConfigService } from "@nestjs/config";
+import { JwtService } from "@nestjs/jwt";
 import { genSalt, hash } from "bcrypt";
 import { ConfigKeyEnum } from "../../common/enums/config.enum.js";
-import type { AuthPayloadType } from "../../common/types/auth-payload.type.js";
-import type { AuthRepository } from "./auth.repository.js";
-import type { SignUpDto } from "./dtos/sign-up.dto.js";
+import { AuthPayloadType } from "../../common/types/auth-payload.type.js";
+import { AuthRepository } from "./auth.repository.js";
+import { SignUpDto } from "./dtos/sign-up.dto.js";
 import { AuthRdo } from "./rdos/auth.rdo.js";
 
 @Injectable()
