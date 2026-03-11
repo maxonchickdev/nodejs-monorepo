@@ -8,11 +8,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview",
-    "lint:check": "eslint --max-warnings=0",
-    "lint:fix": "eslint --fix",
-    "lint:format:check": "prettier . -c --config ../../prettier.config.ts --ignore-path ../../.prettierignore",
-    "lint:format:fix": "prettier . -w --config ../../prettier.config.ts --ignore-path ../../.prettierignore"
+    "preview": "vite preview"
   },
   "dependencies": {
     "react": "^19.2.3",

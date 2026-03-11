@@ -1,22 +1,13 @@
-import { type Configuration } from 'lint-staged';
+import { type Configuration } from "lint-staged";
 
 const config: Configuration = {
-  '*': [
+  "*": [
     (): string =>
       "concurrently 'npm run lint:filesystem' 'npm run lint:clean' 'npm run lint:editor'",
   ],
-  'apps/web/src/**/*.{ts,tsx}': [
-    (): string => 'npm run lint:check -w apps/web',
-    (): string => 'npm run lint:format:check -w apps/web',
-  ],
-  'apps/backend/src/**/*.ts': [
-    (): string => 'npm run lint:check -w apps/backend',
-    (): string => 'npm run lint:format:check -w apps/backend',
-  ],
-  'packages/shared/src/**/*.ts': [
-    (): string => 'npm run lint:check -w packages/shared',
-    (): string => 'npm run lint:format:check -w packages/shared',
-  ],
+  "apps/web/src/**/*.{ts,tsx}": [],
+  "apps/backend/src/**/*.ts": [],
+  "packages/shared/src/**/*.ts": [],
 };
 
 export default config;

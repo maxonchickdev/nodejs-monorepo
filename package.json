@@ -17,10 +17,6 @@
     "apps/backend"
   ],
   "scripts": {
-    "lint:format:check": "prettier . -c",
-    "lint:format:fix": "prettier . -w",
-    "lint:check": "eslint --max-warnings=0",
-    "lint:fix": "eslint --fix",
     "lint:filesystem": "ls-lint",
     "lint:clean": "knip",
     "lint:editor": "editorconfig-checker",
@@ -47,12 +43,9 @@
     "@ls-lint/ls-lint": "^2.3.1",
     "concurrently": "^9.2.1",
     "editorconfig-checker": "^6.1.1",
-    "eslint": "^9.39.2",
     "knip": "^5.82.1",
     "lint-staged": "^16.2.7",
-    "prettier": "^3.8.1",
     "simple-git-hooks": "^2.13.1",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.53.1"
+    "typescript": "^5.9.3"
   }
 }
