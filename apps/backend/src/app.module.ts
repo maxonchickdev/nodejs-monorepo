@@ -3,6 +3,6 @@ import { CoreModule } from "./core/core.module";
 import { AuthModule } from "./modules/auth/auth.module";
 
 @Module({
-  imports: [CoreModule, AuthModule],
+	imports: [CoreModule, AuthModule],
 })
 export class AppModule {}

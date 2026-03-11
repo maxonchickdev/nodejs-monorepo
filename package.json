@@ -1,51 +1,52 @@
 {
-  "name": "nodejs-monorepo",
-  "version": "1.0.0",
-  "description": "NodeJS Monorepo",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com-maxondev-personal:maxonchickdev/nodejs-monorepo.git"
-  },
-  "keywords": [],
-  "author": "maxondev",
-  "license": "ISC",
-  "private": true,
-  "type": "module",
-  "workspaces": [
-    "packages/shared",
-    "apps/web",
-    "apps/backend"
-  ],
-  "scripts": {
-    "lint:filesystem": "ls-lint",
-    "lint:clean": "knip",
-    "lint:editor": "editorconfig-checker",
-    "hooks:init": "simple-git-hooks",
-    "hooks:precommit": "lint-staged",
-    "hooks:prepush": "concurrently 'npm run build -w apps/web' 'npm run build -w apps/backend' 'npm run build -w packages/shared'",
-    "docker:local:up": "docker compose -f docker-compose.local.yml up -d --no-color --timestamps --wait --wait-timeout 20",
-    "docker:local:down": "docker compose -f docker-compose.local.yml down -v",
-    "docker:local:start": "docker compose -f docker-compose.local.yml start",
-    "docker:local:stop": "docker compose -f docker-compose.local.yml stop -t 10",
-    "docker:prod:up": "docker compose -f docker-compose.prod.yml up -d --no-color --timestamps --wait --wait-timeout 20",
-    "docker:prod:down": "docker compose -f docker-compose.prod.yml down -v",
-    "docker:prod:start": "docker compose -f docker-compose.prod.yml start",
-    "docker:prod:stop": "docker compose -f docker-compose.prod.yml stop -t 10"
-  },
-  "overrides": {
-    "@nestjs/common": "^11.1.12",
-    "@nestjs/core": "^11.1.12",
-    "@nestjs/platform-express": "^11.1.12"
-  },
-  "devDependencies": {
-    "@commitlint/cli": "^20.3.1",
-    "@commitlint/config-conventional": "^20.3.1",
-    "@ls-lint/ls-lint": "^2.3.1",
-    "concurrently": "^9.2.1",
-    "editorconfig-checker": "^6.1.1",
-    "knip": "^5.82.1",
-    "lint-staged": "^16.2.7",
-    "simple-git-hooks": "^2.13.1",
-    "typescript": "^5.9.3"
-  }
+	"author": "maxondev",
+	"description": "NodeJS Monorepo",
+	"devDependencies": {
+		"@biomejs/biome": "2.4.6",
+		"@commitlint/cli": "^20.3.1",
+		"@commitlint/config-conventional": "^20.3.1",
+		"@ls-lint/ls-lint": "^2.3.1",
+		"concurrently": "^9.2.1",
+		"editorconfig-checker": "^6.1.1",
+		"knip": "^5.82.1",
+		"simple-git-hooks": "^2.13.1",
+		"typescript": "^5.9.3"
+	},
+	"keywords": [],
+	"license": "ISC",
+	"name": "nodejs-monorepo",
+	"overrides": {
+		"@nestjs/common": "^11.1.12",
+		"@nestjs/core": "^11.1.12",
+		"@nestjs/platform-express": "^11.1.12"
+	},
+	"private": true,
+	"repository": {
+		"type": "git",
+		"url": "git@github.com-maxondev-personal:maxonchickdev/nodejs-monorepo.git"
+	},
+	"scripts": {
+		"docker:local:down": "docker compose -f docker-compose.local.yml down -v",
+		"docker:local:start": "docker compose -f docker-compose.local.yml start",
+		"docker:local:stop": "docker compose -f docker-compose.local.yml stop -t 10",
+		"docker:local:up": "docker compose -f docker-compose.local.yml up -d --no-color --timestamps --wait --wait-timeout 20",
+		"docker:prod:down": "docker compose -f docker-compose.prod.yml down -v",
+		"docker:prod:start": "docker compose -f docker-compose.prod.yml start",
+		"docker:prod:stop": "docker compose -f docker-compose.prod.yml stop -t 10",
+		"docker:prod:up": "docker compose -f docker-compose.prod.yml up -d --no-color --timestamps --wait --wait-timeout 20",
+		"hooks:init": "simple-git-hooks",
+		"hooks:precommit": "concurrently 'npm run lint:filesystem' 'npm run lint:clean' 'npm run lint:editor' 'npm run lint:all'",
+		"hooks:prepush": "concurrently 'npm run build -w apps/web' 'npm run build -w apps/backend' 'npm run build -w packages/shared'",
+		"lint:all": "biome check",
+		"lint:clean": "knip",
+		"lint:editor": "editorconfig-checker",
+		"lint:filesystem": "ls-lint"
+	},
+	"type": "module",
+	"version": "1.0.0",
+	"workspaces": [
+		"packages/shared",
+		"apps/web",
+		"apps/backend"
+	]
 }

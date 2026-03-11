@@ -1,13 +1,13 @@
 {
-  "name": "@nodejs-monorepo/shared",
-  "version": "1.0.0",
-  "description": "@nodejs-monorepo/shared library",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "author": "maxondev",
-  "private": true,
-  "license": "ISC",
-  "scripts": {
-    "build": "tsc -b"
-  }
+	"author": "maxondev",
+	"description": "@nodejs-monorepo/shared library",
+	"license": "ISC",
+	"main": "dist/index.js",
+	"name": "@nodejs-monorepo/shared",
+	"private": true,
+	"scripts": {
+		"build": "tsc -b"
+	},
+	"types": "dist/index.d.ts",
+	"version": "1.0.0"
 }

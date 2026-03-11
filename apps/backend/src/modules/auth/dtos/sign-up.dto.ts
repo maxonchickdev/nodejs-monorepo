@@ -1,141 +1,128 @@
 import { ApiProperty } from "@nestjs/swagger";
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsString,
-  Matches,
-  MaxLength,
-  MinLength,
-} from "class-validator";
+import { IsEmail, IsNotEmpty, IsString, Matches, MaxLength, MinLength } from "class-validator";
 
 export class SignUpDto {
-  @ApiProperty({
-    example: "Eldred_Ondricka",
-    description: "Unique username",
-    minLength: 5,
-    maxLength: 15,
-    required: true,
-    nullable: false,
-    type: String,
-  })
-  @IsString({
-    message: "",
-  })
-  @IsNotEmpty({
-    message: "",
-  })
-  @MinLength(5, {
-    message: "",
-  })
-  @MaxLength(15, {
-    message: "",
-  })
-  username: string;
+	@ApiProperty({
+		description: "Unique username",
+		example: "Eldred_Ondricka",
+		maxLength: 15,
+		minLength: 5,
+		nullable: false,
+		required: true,
+		type: String,
+	})
+	@IsString({
+		message: "",
+	})
+	@IsNotEmpty({
+		message: "",
+	})
+	@MinLength(5, {
+		message: "",
+	})
+	@MaxLength(15, {
+		message: "",
+	})
+	username: string;
 
-  @ApiProperty({
-    example: "Paige",
-    description: "User first name",
-    minLength: 5,
-    maxLength: 30,
-    required: true,
-    nullable: false,
-    type: String,
-  })
-  @IsString({
-    message: "",
-  })
-  @IsNotEmpty({
-    message: "",
-  })
-  @MinLength(5, {
-    message: "",
-  })
-  @MaxLength(30, {
-    message: "",
-  })
-  firstName: string;
+	@ApiProperty({
+		description: "User first name",
+		example: "Paige",
+		maxLength: 30,
+		minLength: 5,
+		nullable: false,
+		required: true,
+		type: String,
+	})
+	@IsString({
+		message: "",
+	})
+	@IsNotEmpty({
+		message: "",
+	})
+	@MinLength(5, {
+		message: "",
+	})
+	@MaxLength(30, {
+		message: "",
+	})
+	firstName: string;
 
-  @ApiProperty({
-    example: "Altenwerth",
-    description: "User last name",
-    minLength: 5,
-    maxLength: 30,
-    required: true,
-    nullable: false,
-    type: String,
-  })
-  @IsString({
-    message: "",
-  })
-  @IsNotEmpty({
-    message: "",
-  })
-  @MinLength(5, {
-    message: "",
-  })
-  @MaxLength(30, {
-    message: "",
-  })
-  lastName: string;
+	@ApiProperty({
+		description: "User last name",
+		example: "Altenwerth",
+		maxLength: 30,
+		minLength: 5,
+		nullable: false,
+		required: true,
+		type: String,
+	})
+	@IsString({
+		message: "",
+	})
+	@IsNotEmpty({
+		message: "",
+	})
+	@MinLength(5, {
+		message: "",
+	})
+	@MaxLength(30, {
+		message: "",
+	})
+	lastName: string;
 
-  @ApiProperty({
-    example: "Horacio4@hotmail.com",
-    description: "User email",
-    required: true,
-    nullable: false,
-    type: String,
-  })
-  @IsString({
-    message: "",
-  })
-  @IsNotEmpty({
-    message: "",
-  })
-  @IsEmail(
-    {},
-    {
-      message: "",
-    },
-  )
-  email: string;
+	@ApiProperty({
+		description: "User email",
+		example: "Horacio4@hotmail.com",
+		nullable: false,
+		required: true,
+		type: String,
+	})
+	@IsString({
+		message: "",
+	})
+	@IsNotEmpty({
+		message: "",
+	})
+	@IsEmail(
+		{},
+		{
+			message: "",
+		},
+	)
+	email: string;
 
-  @ApiProperty({
-    example: "Pa$$wor1",
-    description: "User password",
-    minLength: 5,
-    maxLength: 100,
-    required: true,
-    nullable: false,
-    type: String,
-  })
-  @IsString({
-    message: "",
-  })
-  @IsNotEmpty({
-    message: "",
-  })
-  @MinLength(5, {
-    message: "",
-  })
-  @MaxLength(100, {
-    message: "",
-  })
-  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{5,}$/, {
-    message: "",
-  })
-  password: string;
+	@ApiProperty({
+		description: "User password",
+		example: "Pa$$wor1",
+		maxLength: 100,
+		minLength: 5,
+		nullable: false,
+		required: true,
+		type: String,
+	})
+	@IsString({
+		message: "",
+	})
+	@IsNotEmpty({
+		message: "",
+	})
+	@MinLength(5, {
+		message: "",
+	})
+	@MaxLength(100, {
+		message: "",
+	})
+	@Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{5,}$/, {
+		message: "",
+	})
+	password: string;
 
-  constructor(
-    username: string,
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string,
-  ) {
-    this.username = username;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-    this.password = password;
-  }
+	constructor(username: string, firstName: string, lastName: string, email: string, password: string) {
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+	}
 }

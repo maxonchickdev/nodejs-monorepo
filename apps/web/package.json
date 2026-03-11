@@ -1,24 +1,24 @@
 {
-  "name": "@nodejs-monorepo/web",
-  "version": "1.0.0",
-  "description": "@nodejs-monorepo/web application",
-  "type": "module",
-  "private": true,
-  "license": "ISC",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3"
-  },
-  "devDependencies": {
-    "@types/node": "^24.10.9",
-    "@types/react": "^19.2.9",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react-swc": "^4.2.2",
-    "vite": "^7.3.1"
-  }
+	"dependencies": {
+		"react": "^19.2.3",
+		"react-dom": "^19.2.3"
+	},
+	"description": "@nodejs-monorepo/web application",
+	"devDependencies": {
+		"@types/node": "^24.10.9",
+		"@types/react": "^19.2.9",
+		"@types/react-dom": "^19.2.3",
+		"@vitejs/plugin-react-swc": "^4.2.2",
+		"vite": "^7.3.1"
+	},
+	"license": "ISC",
+	"name": "@nodejs-monorepo/web",
+	"private": true,
+	"scripts": {
+		"build": "tsc -b && vite build",
+		"dev": "vite",
+		"preview": "vite preview"
+	},
+	"type": "module",
+	"version": "1.0.0"
 }
