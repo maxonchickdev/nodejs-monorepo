@@ -141,11 +141,11 @@ export class CatchEverythingFilter implements ExceptionFilter {
 
 	private getPrismaErrorMessage(error: Prisma.PrismaClientKnownRequestError): string {
 		if (error.code === "P2002") {
-			const target = (error.meta?.["target"] as string[] | undefined)?.[0];
+			const target = (error.meta?.target as string[] | undefined)?.[0];
 			return target ? `Unique constraint failed on field: ${target}` : error.message;
 		}
 		if (error.code === "P2025") {
-			const modelName = error.meta?.["modelName"];
+			const modelName = error.meta?.modelName;
 			return modelName ? `${String(modelName)} record not found` : "Record not found";
 		}
 		return error.message;
