@@ -37,8 +37,8 @@
 		"hooks:init": "simple-git-hooks",
 		"hooks:precommit": "concurrently 'npm run lint:filesystem' 'npm run lint:clean' 'npm run lint:editor' 'npm run lint:all:check'",
 		"hooks:prepush": "concurrently 'npm run build -w apps/web' 'npm run build -w apps/backend' 'npm run build -w packages/shared'",
-		"lint:all:check": "biome check",
-		"lint:all:fix": "biome check --fix",
+		"lint:all:check": "biome check .",
+		"lint:all:fix": "biome check --write .",
 		"lint:clean": "knip",
 		"lint:editor": "editorconfig-checker",
 		"lint:filesystem": "ls-lint"
