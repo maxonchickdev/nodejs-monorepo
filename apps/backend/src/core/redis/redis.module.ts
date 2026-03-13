@@ -15,7 +15,9 @@ import { RedisService } from "./redis.service.js";
 					keyPrefix: "nestjs-boilerplate-cache:",
 				},
 				type: "single",
-				url: configService.getOrThrow<string>(`${ConfigKeyEnum.CACHE}.redisUrl`),
+				url: configService.getOrThrow<string>(
+					`${ConfigKeyEnum.CACHE}.redisUrl`,
+				),
 			}),
 		}),
 	],

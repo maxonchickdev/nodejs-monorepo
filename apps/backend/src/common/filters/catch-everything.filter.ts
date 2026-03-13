@@ -1,10 +1,20 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Logger } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { HttpAdapterHost } from "@nestjs/core";
-import { Prisma } from "@prisma/generated/client.js";
+import {
+	type ArgumentsHost,
+	Catch,
+	type ExceptionFilter,
+	HttpException,
+	HttpStatus,
+	Logger,
+} from "@nestjs/common";
+import type { ConfigService } from "@nestjs/config";
+import type { HttpAdapterHost } from "@nestjs/core";
+import type { Prisma } from "@prisma/generated/client.js";
 import { ConfigKeyEnum } from "../enums/config.enum.js";
 import { EnvironmentsEnum } from "../enums/environments.enum.js";
-import { ErrorResponseBody, HttpExceptionResponse } from "../types/error-response.type.js";
+import type {
+	ErrorResponseBody,
+	HttpExceptionResponse,
+} from "../types/error-response.type.js";
 
 const PRISMA_ERROR_MAP: Record<string, HttpStatus> = {
 	P2000: HttpStatus.BAD_REQUEST,
@@ -43,7 +53,10 @@ export class CatchEverythingFilter implements ExceptionFilter {
 		};
 
 		if (statusCode >= 500) {
-			this.logger.error(`Unhandled ${statusCode} error: ${String(exception)}`, exception instanceof Error ? exception.stack : undefined);
+			this.logger.error(
+				`Unhandled ${statusCode} error: ${String(exception)}`,
+				exception instanceof Error ? exception.stack : undefined,
+			);
 		}
 
 		httpAdapter.reply(ctx.getResponse(), responseBody, statusCode);
@@ -90,17 +103,22 @@ export class CatchEverythingFilter implements ExceptionFilter {
 
 		return {
 			error: typeof error === "string" ? error : "Error",
-			message: Array.isArray(message) ? message : String(message ?? INTERNAL_ERROR_MESSAGE),
+			message: Array.isArray(message)
+				? message
+				: String(message ?? INTERNAL_ERROR_MESSAGE),
 			statusCode: response?.statusCode ?? statusCode,
 		};
 	}
 
-	private normalizePrismaKnownRequestError(error: Prisma.PrismaClientKnownRequestError): {
+	private normalizePrismaKnownRequestError(
+		error: Prisma.PrismaClientKnownRequestError,
+	): {
 		statusCode: number;
 		error: string;
 		message: string | string[];
 	} {
-		const statusCode = PRISMA_ERROR_MAP[error.code] ?? HttpStatus.INTERNAL_SERVER_ERROR;
+		const statusCode =
+			PRISMA_ERROR_MAP[error.code] ?? HttpStatus.INTERNAL_SERVER_ERROR;
 		const message = this.getPrismaErrorMessage(error);
 
 		return {
@@ -110,7 +128,9 @@ export class CatchEverythingFilter implements ExceptionFilter {
 		};
 	}
 
-	private normalizePrismaValidationError(error: Prisma.PrismaClientValidationError): {
+	private normalizePrismaValidationError(
+		error: Prisma.PrismaClientValidationError,
+	): {
 		statusCode: number;
 		error: string;
 		message: string | string[];
@@ -134,38 +154,59 @@ export class CatchEverythingFilter implements ExceptionFilter {
 
 		return {
 			error: INTERNAL_ERROR_TYPE,
-			message: isProduction ? INTERNAL_ERROR_MESSAGE : exception instanceof Error ? exception.message : String(exception),
+			message: isProduction
+				? INTERNAL_ERROR_MESSAGE
+				: exception instanceof Error
+					? exception.message
+					: String(exception),
 			statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
 		};
 	}
 
-	private getPrismaErrorMessage(error: Prisma.PrismaClientKnownRequestError): string {
+	private getPrismaErrorMessage(
+		error: Prisma.PrismaClientKnownRequestError,
+	): string {
 		if (error.code === "P2002") {
 			const target = (error.meta?.target as string[] | undefined)?.[0];
-			return target ? `Unique constraint failed on field: ${target}` : error.message;
+			return target
+				? `Unique constraint failed on field: ${target}`
+				: error.message;
 		}
 		if (error.code === "P2025") {
 			const modelName = error.meta?.modelName;
-			return modelName ? `${String(modelName)} record not found` : "Record not found";
+			return modelName
+				? `${String(modelName)} record not found`
+				: "Record not found";
 		}
 		return error.message;
 	}
 
 	private isProduction(): boolean {
-		return this.configService.get<string>(`${ConfigKeyEnum.ENVIRONMENT}.nodeEnv`) === EnvironmentsEnum.PRODUCTION;
+		return (
+			this.configService.get<string>(`${ConfigKeyEnum.ENVIRONMENT}.nodeEnv`) ===
+			EnvironmentsEnum.PRODUCTION
+		);
 	}
 
-	private isPrismaKnownRequestError(exception: unknown): exception is Prisma.PrismaClientKnownRequestError {
+	private isPrismaKnownRequestError(
+		exception: unknown,
+	): exception is Prisma.PrismaClientKnownRequestError {
 		return (
 			typeof exception === "object" &&
 			exception !== null &&
 			"code" in exception &&
-			typeof (exception as Prisma.PrismaClientKnownRequestError).code === "string" &&
+			typeof (exception as Prisma.PrismaClientKnownRequestError).code ===
+				"string" &&
 			(exception as Prisma.PrismaClientKnownRequestError).code.startsWith("P")
 		);
 	}
 
-	private isPrismaValidationError(exception: unknown): exception is Prisma.PrismaClientValidationError {
-		return exception instanceof Error && exception.constructor.name === "PrismaClientValidationError";
+	private isPrismaValidationError(
+		exception: unknown,
+	): exception is Prisma.PrismaClientValidationError {
+		return (
+			exception instanceof Error &&
+			exception.constructor.name === "PrismaClientValidationError"
+		);
 	}
 }

@@ -85,7 +85,16 @@ export class UserRdo implements User {
 	})
 	updatedAt: Date;
 
-	constructor(id: number, username: string, firstName: string, lastName: string, email: string, password: string, createdAt: Date, updatedAt: Date) {
+	constructor(
+		id: number,
+		username: string,
+		firstName: string,
+		lastName: string,
+		email: string,
+		password: string,
+		createdAt: Date,
+		updatedAt: Date,
+	) {
 		this.id = id;
 		this.username = username;
 		this.firstName = firstName;

@@ -13,17 +13,33 @@ import { rateLimitRegister } from "../../common/registers/rate-limit.register.js
 		CoreConfigModule.forRoot({
 			envFilePath: ["../../.env"],
 			isGlobal: true,
-			load: [cacheRegister, appRegister, dbRegister, environmentRegister, jwtRegister, rateLimitRegister],
+			load: [
+				cacheRegister,
+				appRegister,
+				dbRegister,
+				environmentRegister,
+				jwtRegister,
+				rateLimitRegister,
+			],
 			validationSchema: Joi.object({
 				APP_DESCRIPTION: Joi.string(),
 				APP_NAME: Joi.string(),
 
-				APP_PORT: Joi.number().port().default(3000).description("Port on which the application will run"),
-				APP_REQUEST_TIMEOUT: Joi.number().positive().default(5000).description("Request timeout in milliseconds"),
+				APP_PORT: Joi.number()
+					.port()
+					.default(3000)
+					.description("Port on which the application will run"),
+				APP_REQUEST_TIMEOUT: Joi.number()
+					.positive()
+					.default(5000)
+					.description("Request timeout in milliseconds"),
 				JWT_EXPIRES_IN: Joi.number().required().description("JWT expires in"),
 
 				JWT_SECRET: Joi.string().required().description("JWT secret"),
-				NODE_ENV: Joi.string().valid("development", "production", "test").default("development").description("Application environment"),
+				NODE_ENV: Joi.string()
+					.valid("development", "production", "test")
+					.default("development")
+					.description("Application environment"),
 
 				POSTGRES_URL: Joi.string()
 					.uri({ scheme: ["postgresql", "postgres"] })
@@ -34,7 +50,9 @@ import { rateLimitRegister } from "../../common/registers/rate-limit.register.js
 					.uri({ scheme: ["redis"] })
 					.required()
 					.description("Redis connection URL"),
-				THROTTLE_LIMIT: Joi.number().required().description("Rate limiting limit"),
+				THROTTLE_LIMIT: Joi.number()
+					.required()
+					.description("Rate limiting limit"),
 
 				THROTTLE_TTL: Joi.number().required().description("Rate limiting TTL"),
 			}),

@@ -1,15 +1,15 @@
 import { Injectable } from "@nestjs/common";
 import {
 	HealthCheck,
-	HealthCheckResult,
-	HealthCheckService,
-	HealthIndicatorResult,
-	HealthIndicatorService,
-	PrismaHealthIndicator,
+	type HealthCheckResult,
+	type HealthCheckService,
+	type HealthIndicatorResult,
+	type HealthIndicatorService,
+	type PrismaHealthIndicator,
 } from "@nestjs/terminus";
 import { InjectRedis } from "@nestjs-modules/ioredis";
-import { Redis } from "ioredis";
-import { PrismaService } from "../prisma/prisma.service.js";
+import type { Redis } from "ioredis";
+import type { PrismaService } from "../prisma/prisma.service.js";
 
 @Injectable()
 export class HealthChecksService {
@@ -24,7 +24,8 @@ export class HealthChecksService {
 	@HealthCheck()
 	check(): Promise<HealthCheckResult> {
 		return this.healthCheckService.check([
-			(): Promise<HealthIndicatorResult> => this.prismaHealthIndicator.pingCheck("postgres", this.prismaService),
+			(): Promise<HealthIndicatorResult> =>
+				this.prismaHealthIndicator.pingCheck("postgres", this.prismaService),
 			(): Promise<HealthIndicatorResult> => this.pingCheck("redis"),
 		]);
 	}
@@ -36,7 +37,8 @@ export class HealthChecksService {
 			await this.redis.ping();
 			return indicator.up();
 		} catch (e) {
-			const message = e instanceof Error ? e.message : "Redis service not started";
+			const message =
+				e instanceof Error ? e.message : "Redis service not started";
 			return indicator.down({ message });
 		}
 	}

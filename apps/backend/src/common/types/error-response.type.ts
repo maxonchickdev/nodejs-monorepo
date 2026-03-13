@@ -6,4 +6,6 @@ export type ErrorResponseBody = {
 	timestamp?: string;
 };
 
-export type HttpExceptionResponse = string | { message?: string | string[]; error?: string; statusCode?: number };
+export type HttpExceptionResponse =
+	| string
+	| { message?: string | string[]; error?: string; statusCode?: number };

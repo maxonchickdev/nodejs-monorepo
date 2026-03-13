@@ -7,6 +7,13 @@ import { RateLimitModule } from "./rate-limit/rate-limit.module.js";
 import { RedisModule } from "./redis/redis.module.js";
 
 @Module({
-	imports: [ConfigModule, HealthChecksModule, JwtModule, PrismaModule, RateLimitModule, RedisModule],
+	imports: [
+		ConfigModule,
+		HealthChecksModule,
+		JwtModule,
+		PrismaModule,
+		RateLimitModule,
+		RedisModule,
+	],
 })
 export class CoreModule {}

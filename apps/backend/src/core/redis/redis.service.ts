@@ -10,7 +10,11 @@ export class RedisService implements OnModuleDestroy {
 		this.redis.quit();
 	}
 
-	async set<T extends object>(key: string, val: T, ttl?: number): Promise<void> {
+	async set<T extends object>(
+		key: string,
+		val: T,
+		ttl?: number,
+	): Promise<void> {
 		const stringVal = JSON.stringify(val);
 
 		if (ttl) {

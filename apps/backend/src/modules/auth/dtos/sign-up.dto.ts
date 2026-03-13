@@ -1,5 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsNotEmpty, IsString, Matches, MaxLength, MinLength } from "class-validator";
+import {
+	IsEmail,
+	IsNotEmpty,
+	IsString,
+	Matches,
+	MaxLength,
+	MinLength,
+} from "class-validator";
 
 export class SignUpDto {
 	@ApiProperty({
@@ -118,7 +125,13 @@ export class SignUpDto {
 	})
 	password: string;
 
-	constructor(username: string, firstName: string, lastName: string, email: string, password: string) {
+	constructor(
+		username: string,
+		firstName: string,
+		lastName: string,
+		email: string,
+		password: string,
+	) {
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;

@@ -11,9 +11,19 @@ import { ConfigKeyEnum } from "../../common/enums/config.enum.js";
 			inject: [ConfigService],
 			useFactory: (configService: ConfigService) => [
 				{
-					limit: Number(configService.getOrThrow<number>(`${ConfigKeyEnum.RATE_LIMIT}.limit`)),
+					limit: Number(
+						configService.getOrThrow<number>(
+							`${ConfigKeyEnum.RATE_LIMIT}.limit`,
+						),
+					),
 					name: "rate-limiter",
-					ttl: seconds(Number(configService.getOrThrow<number>(`${ConfigKeyEnum.RATE_LIMIT}.ttl`))),
+					ttl: seconds(
+						Number(
+							configService.getOrThrow<number>(
+								`${ConfigKeyEnum.RATE_LIMIT}.ttl`,
+							),
+						),
+					),
 				},
 			],
 		}),

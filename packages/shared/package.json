@@ -6,7 +6,11 @@
 	"name": "@nodejs-monorepo/shared",
 	"private": true,
 	"scripts": {
-		"build": "tsc -b"
+		"build": "tsc -b",
+		"lint:check": "biome lint",
+		"lint:fix": "biome lint --write",
+		"lint:format:check": "biome format",
+		"lint:format:fix": "biome format --write"
 	},
 	"types": "dist/index.d.ts",
 	"version": "1.0.0"

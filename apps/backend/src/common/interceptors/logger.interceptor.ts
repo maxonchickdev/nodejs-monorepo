@@ -1,4 +1,10 @@
-import { type CallHandler, type ExecutionContext, Injectable, Logger, type NestInterceptor } from "@nestjs/common";
+import {
+	type CallHandler,
+	type ExecutionContext,
+	Injectable,
+	Logger,
+	type NestInterceptor,
+} from "@nestjs/common";
 import type { ConfigService } from "@nestjs/config";
 import type { Request, Response } from "express";
 import { type Observable, tap } from "rxjs";
@@ -13,7 +19,10 @@ export class LoggingInterceptor implements NestInterceptor {
 	private readonly isProduction: boolean;
 
 	constructor(private readonly configService: ConfigService) {
-		this.isProduction = this.configService.getOrThrow<string>(`${ConfigKeyEnum.ENVIRONMENT}.nodeEnv`) === EnvironmentsEnum.PRODUCTION;
+		this.isProduction =
+			this.configService.getOrThrow<string>(
+				`${ConfigKeyEnum.ENVIRONMENT}.nodeEnv`,
+			) === EnvironmentsEnum.PRODUCTION;
 	}
 
 	intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
@@ -34,13 +43,26 @@ export class LoggingInterceptor implements NestInterceptor {
 				error: (e) => {
 					const duration = Date.now() - start;
 					const statusCode = response.statusCode;
-					this.logResponse("error", method, originalUrl, statusCode, duration, e);
+					this.logResponse(
+						"error",
+						method,
+						originalUrl,
+						statusCode,
+						duration,
+						e,
+					);
 				},
 				next: () => {
 					const duration = Date.now() - start;
 					const { statusCode } = response;
 
-					this.logResponse("success", method, originalUrl, statusCode, duration);
+					this.logResponse(
+						"success",
+						method,
+						originalUrl,
+						statusCode,
+						duration,
+					);
 				},
 			}),
 		);
@@ -60,11 +82,15 @@ export class LoggingInterceptor implements NestInterceptor {
 				break;
 
 			case "success":
-				this.logger.debug(`[Completed] - [Method: ${method}] - [Url: ${url}] - [Status: ${statusCode}] - [Duration: ${duration}ms]`);
+				this.logger.debug(
+					`[Completed] - [Method: ${method}] - [Url: ${url}] - [Status: ${statusCode}] - [Duration: ${duration}ms]`,
+				);
 				break;
 
 			case "error":
-				this.logger.error(`[Failed] - [Method: ${method}] - [Url: ${url}] - [Status: ${statusCode}] - [Duration: ${duration}ms] - [Error: ${error}]`);
+				this.logger.error(
+					`[Failed] - [Method: ${method}] - [Url: ${url}] - [Status: ${statusCode}] - [Duration: ${duration}ms] - [Error: ${error}]`,
+				);
 				break;
 		}
 	}

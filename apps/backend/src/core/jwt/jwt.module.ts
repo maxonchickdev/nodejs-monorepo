@@ -12,7 +12,9 @@ import { ConfigKeyEnum } from "../../common/enums/config.enum.js";
 			useFactory: (configService: ConfigService): JwtModuleOptions => ({
 				secret: configService.getOrThrow<string>(`${ConfigKeyEnum.JWT}.secret`),
 				signOptions: {
-					expiresIn: configService.getOrThrow<number>(`${ConfigKeyEnum.JWT}.expiresIn`),
+					expiresIn: configService.getOrThrow<number>(
+						`${ConfigKeyEnum.JWT}.expiresIn`,
+					),
 				},
 			}),
 		}),

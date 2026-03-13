@@ -1,10 +1,24 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, UseGuards } from "@nestjs/common";
-import { ApiBody, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags, ApiUnauthorizedResponse } from "@nestjs/swagger";
+import {
+	Body,
+	Controller,
+	HttpCode,
+	HttpStatus,
+	Post,
+	UseGuards,
+} from "@nestjs/common";
+import {
+	ApiBody,
+	ApiCreatedResponse,
+	ApiOkResponse,
+	ApiOperation,
+	ApiTags,
+	ApiUnauthorizedResponse,
+} from "@nestjs/swagger";
 import { UserId } from "../../common/decorators/user-id.decorator.js";
 import { LocalGuard } from "../../common/guards/local.guard.js";
-import { AuthService } from "./auth.service.js";
+import type { AuthService } from "./auth.service.js";
 import { SignInDto } from "./dtos/sign-in.dto.js";
-import { SignUpDto } from "./dtos/sign-up.dto.js";
+import type { SignUpDto } from "./dtos/sign-up.dto.js";
 import { AuthRdo } from "./rdos/auth.rdo.js";
 
 @ApiTags("Authentication & Authorization")

@@ -1,0 +1,12 @@
+{
+	"root": false,
+	"extends": "//",
+	"files": {
+		"includes": ["**", "!prisma"]
+	},
+	"javascript": {
+		"parser": {
+			"unsafeParameterDecoratorsEnabled": true
+		}
+	}
+}

@@ -17,7 +17,11 @@
 	"scripts": {
 		"build": "tsc -b && vite build",
 		"dev": "vite",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"lint:check": "biome lint",
+		"lint:fix": "biome lint --write",
+		"lint:format:check": "biome format",
+		"lint:format:fix": "biome format --write"
 	},
 	"type": "module",
 	"version": "1.0.0"

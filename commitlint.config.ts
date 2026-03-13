@@ -3,7 +3,8 @@ import { RuleConfigSeverity, type UserConfig } from "@commitlint/types";
 const config: UserConfig = {
 	defaultIgnores: true,
 	extends: ["@commitlint/config-conventional"],
-	helpUrl: "https://github.com/conventional-changelog/commitlint/#what-is-commitlint",
+	helpUrl:
+		"https://github.com/conventional-changelog/commitlint/#what-is-commitlint",
 	rules: {
 		"body-case": [RuleConfigSeverity.Error, "always", "sentencecase"],
 		"body-empty": [RuleConfigSeverity.Error, "always"],
@@ -24,7 +25,11 @@ const config: UserConfig = {
 		"scope-case": [RuleConfigSeverity.Error, "always", "lowercase"],
 		"scope-delimiter-style": [RuleConfigSeverity.Error, "always", ["/"]],
 		"scope-empty": [RuleConfigSeverity.Error, "never"],
-		"scope-enum": [RuleConfigSeverity.Error, "always", ["root", "backend", "web", "shared"]],
+		"scope-enum": [
+			RuleConfigSeverity.Error,
+			"always",
+			["root", "backend", "web", "shared"],
+		],
 		"scope-max-length": [RuleConfigSeverity.Error, "always", Infinity],
 		"scope-min-length": [RuleConfigSeverity.Error, "always", 0],
 
@@ -36,7 +41,11 @@ const config: UserConfig = {
 
 		"type-case": [RuleConfigSeverity.Error, "always", "lowercase"],
 		"type-empty": [RuleConfigSeverity.Error, "never"],
-		"type-enum": [RuleConfigSeverity.Error, "always", ["chore", "ci", "docs", "feat", "fix", "refactor", "test"]],
+		"type-enum": [
+			RuleConfigSeverity.Error,
+			"always",
+			["chore", "ci", "docs", "feat", "fix", "refactor", "test"],
+		],
 		"type-max-length": [RuleConfigSeverity.Error, "always", Infinity],
 		"type-min-length": [RuleConfigSeverity.Error, "always", 0],
 	},
