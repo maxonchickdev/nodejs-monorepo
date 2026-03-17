@@ -6,6 +6,7 @@
 	"name": "@nodejs-monorepo/shared",
 	"private": true,
 	"scripts": {
+		"build": "tsc -b",
 		"lint:types:check": "tsc --noEmit --pretty --diagnostics",
 		"lint:check": "biome lint",
 		"lint:fix": "biome lint --write",
