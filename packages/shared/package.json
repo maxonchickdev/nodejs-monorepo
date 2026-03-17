@@ -14,5 +14,9 @@
 		"lint:format:fix": "biome format --write"
 	},
 	"types": "dist/index.d.ts",
-	"version": "1.0.0"
+	"version": "1.0.0",
+	"engines": {
+		"node": "22.22.0",
+		"npm": "10.9.4"
+	}
 }
