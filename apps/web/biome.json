@@ -1,6 +1,9 @@
 {
 	"root": false,
 	"extends": "//",
+	"files": {
+		"includes": ["**", "!dist"]
+	},
 	"linter": {
 		"rules": {
 			"style": {

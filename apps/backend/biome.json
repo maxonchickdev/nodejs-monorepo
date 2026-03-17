@@ -2,7 +2,7 @@
 	"root": false,
 	"extends": "//",
 	"files": {
-		"includes": ["**", "!prisma"]
+		"includes": ["**", "!prisma", "!dist"]
 	},
 	"javascript": {
 		"parser": {
