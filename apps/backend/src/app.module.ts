@@ -1,8 +1,21 @@
 import { Module } from "@nestjs/common";
-import { CoreModule } from "./core/core.module";
-import { AuthModule } from "./modules/auth/auth.module";
+import { ConfigModule } from "./core/config/config.module.js";
+import { HealthChecksModule } from "./core/health-checks/health-checks.module.js";
+import { JwtModule } from "./core/jwt/jwt.module.js";
+import { PrismaModule } from "./core/prisma/prisma.module.js";
+import { RateLimitModule } from "./core/rate-limit/rate-limit.module.js";
+import { RedisModule } from "./core/redis/redis.module.js";
+import { AuthModule } from "./modules/auth/auth.module.js";
 
 @Module({
-	imports: [CoreModule, AuthModule],
+	imports: [
+		ConfigModule,
+		HealthChecksModule,
+		JwtModule,
+		PrismaModule,
+		RateLimitModule,
+		RedisModule,
+		AuthModule,
+	],
 })
 export class AppModule {}

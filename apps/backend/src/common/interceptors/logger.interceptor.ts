@@ -8,7 +8,7 @@ import {
 import type { ConfigService } from "@nestjs/config";
 import type { Request, Response } from "express";
 import { type Observable, tap } from "rxjs";
-import { ConfigKeyEnum } from "../enums/config.enum.js";
+import { ConfigKeyEnum } from "../enums/config-key.enum.js";
 import { EnvironmentsEnum } from "../enums/environments.enum.js";
 
 type LoggerExpressionType = "incoming" | "error" | "success";
@@ -21,8 +21,8 @@ export class LoggingInterceptor implements NestInterceptor {
 	constructor(private readonly configService: ConfigService) {
 		this.isProduction =
 			this.configService.getOrThrow<string>(
-				`${ConfigKeyEnum.ENVIRONMENT}.nodeEnv`,
-			) === EnvironmentsEnum.PRODUCTION;
+				`${ConfigKeyEnum.Environment}.nodeEnv`,
+			) === EnvironmentsEnum.Production;
 	}
 
 	intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {

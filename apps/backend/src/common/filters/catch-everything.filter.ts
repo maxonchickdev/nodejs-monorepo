@@ -9,7 +9,7 @@ import {
 import type { ConfigService } from "@nestjs/config";
 import type { HttpAdapterHost } from "@nestjs/core";
 import type { Prisma } from "@prisma/generated/client.js";
-import { ConfigKeyEnum } from "../enums/config.enum.js";
+import { ConfigKeyEnum } from "../enums/config-key.enum.js";
 import { EnvironmentsEnum } from "../enums/environments.enum.js";
 import type {
 	ErrorResponseBody,
@@ -183,8 +183,8 @@ export class CatchEverythingFilter implements ExceptionFilter {
 
 	private isProduction(): boolean {
 		return (
-			this.configService.get<string>(`${ConfigKeyEnum.ENVIRONMENT}.nodeEnv`) ===
-			EnvironmentsEnum.PRODUCTION
+			this.configService.get<string>(`${ConfigKeyEnum.Environment}.nodeEnv`) ===
+			EnvironmentsEnum.Production
 		);
 	}
 

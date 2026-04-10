@@ -5,7 +5,7 @@ import type { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import helmet from "helmet";
 import { AppModule } from "./app.module.js";
-import { ConfigKeyEnum } from "./common/enums/config.enum.js";
+import { ConfigKeyEnum } from "./common/enums/config-key.enum.js";
 import { EnvironmentsEnum } from "./common/enums/environments.enum.js";
 import { CatchEverythingFilter } from "./common/filters/catch-everything.filter.js";
 import { LoggingInterceptor } from "./common/interceptors/logger.interceptor.js";
@@ -18,11 +18,11 @@ const logger: Logger = new Logger("Bootstrap");
 
 	const configService = app.get(ConfigService);
 	const isProduction =
-		configService.getOrThrow<string>(`${ConfigKeyEnum.ENVIRONMENT}.nodeEnv`) ===
-		EnvironmentsEnum.PRODUCTION;
+		configService.getOrThrow<string>(`${ConfigKeyEnum.Environment}.nodeEnv`) ===
+		EnvironmentsEnum.Production;
 
 	const appPort = configService.getOrThrow<number>(
-		`${ConfigKeyEnum.APP}.appPort`,
+		`${ConfigKeyEnum.App}.appPort`,
 	);
 
 	app.enableVersioning({
@@ -35,7 +35,7 @@ const logger: Logger = new Logger("Bootstrap");
 		const swaggerPath: string = "/api/docs";
 		const appName: string = configService.getOrThrow<string>("APP_NAME");
 		const appDescription: string = configService.getOrThrow<string>(
-			`${ConfigKeyEnum.APP}.appDescription`,
+			`${ConfigKeyEnum.App}.appDescription`,
 		);
 
 		const swaggerConfig = new DocumentBuilder()

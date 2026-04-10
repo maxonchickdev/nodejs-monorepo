@@ -3,6 +3,7 @@ import {
 	Controller,
 	HttpCode,
 	HttpStatus,
+	Inject,
 	Post,
 	UseGuards,
 } from "@nestjs/common";
@@ -16,7 +17,7 @@ import {
 } from "@nestjs/swagger";
 import { UserId } from "../../common/decorators/user-id.decorator.js";
 import { LocalGuard } from "../../common/guards/local.guard.js";
-import type { AuthService } from "./auth.service.js";
+import { AuthService } from "./auth.service.js";
 import { SignInDto } from "./dtos/sign-in.dto.js";
 import type { SignUpDto } from "./dtos/sign-up.dto.js";
 import { AuthRdo } from "./rdos/auth.rdo.js";
@@ -24,7 +25,7 @@ import { AuthRdo } from "./rdos/auth.rdo.js";
 @ApiTags("Authentication & Authorization")
 @Controller("auth")
 export class AuthController {
-	constructor(private readonly authService: AuthService) {}
+	constructor(@Inject(AuthService) private readonly authService: AuthService) {}
 
 	@Post("sign-in")
 	@UseGuards(LocalGuard)

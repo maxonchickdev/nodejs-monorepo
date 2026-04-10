@@ -1,10 +1,10 @@
-import { ConflictException, Injectable } from "@nestjs/common";
-import type { ConfigService } from "@nestjs/config";
-import type { JwtService } from "@nestjs/jwt";
+import { ConflictException, Inject, Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { JwtService } from "@nestjs/jwt";
 import { genSalt, hash } from "bcrypt";
-import { ConfigKeyEnum } from "../../common/enums/config.enum.js";
+import { ConfigKeyEnum } from "../../common/enums/config-key.enum.js";
 import type { AuthPayloadType } from "../../common/types/auth-payload.type.js";
-import type { AuthRepository } from "./auth.repository.js";
+import { AuthRepository } from "./auth.repository.js";
 import type { SignUpDto } from "./dtos/sign-up.dto.js";
 import { AuthRdo } from "./rdos/auth.rdo.js";
 
@@ -13,12 +13,12 @@ export class AuthService {
 	private readonly jwtSecret: string;
 
 	constructor(
-		private readonly jwtService: JwtService,
-		private readonly authRepository: AuthRepository,
-		private readonly configService: ConfigService,
+		@Inject(JwtService) private readonly jwtService: JwtService,
+		@Inject(AuthRepository) private readonly authRepository: AuthRepository,
+		@Inject(ConfigService) private readonly configService: ConfigService,
 	) {
 		this.jwtSecret = this.configService.getOrThrow<string>(
-			`${ConfigKeyEnum.JWT}.secret`,
+			`${ConfigKeyEnum.Jwt}.secret`,
 		);
 	}
 

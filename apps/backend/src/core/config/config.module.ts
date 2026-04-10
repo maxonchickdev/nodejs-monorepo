@@ -1,12 +1,12 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule as CoreConfigModule } from "@nestjs/config";
 import Joi from "joi";
-import { appRegister } from "../../common/registers/app.register.js";
-import { cacheRegister } from "../../common/registers/cache.register.js";
-import { dbRegister } from "../../common/registers/db.register.js";
-import { environmentRegister } from "../../common/registers/environment.register.js";
-import { jwtRegister } from "../../common/registers/jwt.register.js";
-import { rateLimitRegister } from "../../common/registers/rate-limit.register.js";
+import { appRegister } from "./registers/app.register";
+import { environmentRegister } from "./registers/environment.register";
+import { jwtRegister } from "./registers/jwt.register";
+import { prismaRegister } from "./registers/prisma.register";
+import { rateLimitRegister } from "./registers/rate-limit.register";
+import { redisRegister } from "./registers/redis.register";
 
 @Module({
 	imports: [
@@ -14,9 +14,9 @@ import { rateLimitRegister } from "../../common/registers/rate-limit.register.js
 			envFilePath: ["../../.env"],
 			isGlobal: true,
 			load: [
-				cacheRegister,
+				redisRegister,
 				appRegister,
-				dbRegister,
+				prismaRegister,
 				environmentRegister,
 				jwtRegister,
 				rateLimitRegister,

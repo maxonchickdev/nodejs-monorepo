@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { APP_GUARD } from "@nestjs/core";
 import { seconds, ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
-import { ConfigKeyEnum } from "../../common/enums/config.enum.js";
+import { ConfigKeyEnum } from "../../common/enums/config-key.enum.js";
 
 @Module({
 	imports: [
@@ -13,14 +13,14 @@ import { ConfigKeyEnum } from "../../common/enums/config.enum.js";
 				{
 					limit: Number(
 						configService.getOrThrow<number>(
-							`${ConfigKeyEnum.RATE_LIMIT}.limit`,
+							`${ConfigKeyEnum.RateLimit}.limit`,
 						),
 					),
 					name: "rate-limiter",
 					ttl: seconds(
 						Number(
 							configService.getOrThrow<number>(
-								`${ConfigKeyEnum.RATE_LIMIT}.ttl`,
+								`${ConfigKeyEnum.RateLimit}.ttl`,
 							),
 						),
 					),

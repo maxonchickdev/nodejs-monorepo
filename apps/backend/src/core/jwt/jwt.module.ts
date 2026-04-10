@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { JwtModule as CoreJwtModule, type JwtModuleOptions } from "@nestjs/jwt";
-import { ConfigKeyEnum } from "../../common/enums/config.enum.js";
+import { ConfigKeyEnum } from "../../common/enums/config-key.enum.js";
 
 @Module({
 	exports: [CoreJwtModule],
@@ -10,10 +10,10 @@ import { ConfigKeyEnum } from "../../common/enums/config.enum.js";
 			imports: [ConfigModule],
 			inject: [ConfigService],
 			useFactory: (configService: ConfigService): JwtModuleOptions => ({
-				secret: configService.getOrThrow<string>(`${ConfigKeyEnum.JWT}.secret`),
+				secret: configService.getOrThrow<string>(`${ConfigKeyEnum.Jwt}.secret`),
 				signOptions: {
 					expiresIn: configService.getOrThrow<number>(
-						`${ConfigKeyEnum.JWT}.expiresIn`,
+						`${ConfigKeyEnum.Jwt}.expiresIn`,
 					),
 				},
 			}),

@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { RedisModule as CoreRedisModule } from "@nestjs-modules/ioredis";
-import { ConfigKeyEnum } from "../../common/enums/config.enum.js";
+import { ConfigKeyEnum } from "../../common/enums/config-key.enum.js";
 import { RedisService } from "./redis.service.js";
 
 @Module({
@@ -16,7 +16,7 @@ import { RedisService } from "./redis.service.js";
 				},
 				type: "single",
 				url: configService.getOrThrow<string>(
-					`${ConfigKeyEnum.CACHE}.redisUrl`,
+					`${ConfigKeyEnum.Redis}.redisUrl`,
 				),
 			}),
 		}),

@@ -1,21 +1,21 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
-import type { ConfigService } from "@nestjs/config";
+import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
-import type { AuthRepository } from "../../modules/auth/auth.repository.js";
-import { ConfigKeyEnum } from "../enums/config.enum.js";
+import { AuthRepository } from "../../modules/auth/auth.repository.js";
+import { ConfigKeyEnum } from "../enums/config-key.enum.js";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, "jwt") {
 	constructor(
-		private readonly authRepository: AuthRepository,
-		readonly configService: ConfigService,
+		@Inject(AuthRepository) private readonly authRepository: AuthRepository,
+		@Inject(ConfigService) readonly configService: ConfigService,
 	) {
 		super({
 			ignoreExpiration: false,
 			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 			secretOrKey: configService.getOrThrow<string>(
-				`${ConfigKeyEnum.JWT}.secret`,
+				`${ConfigKeyEnum.Jwt}.secret`,
 			),
 		});
 	}
