@@ -55,6 +55,7 @@ import { redisRegister } from "./registers/redis.register";
 					.description("Rate limiting limit"),
 
 				THROTTLE_TTL: Joi.number().required().description("Rate limiting TTL"),
+				// TODO: add envs from .env
 			}),
 		}),
 	],
