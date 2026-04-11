@@ -28,10 +28,10 @@
 		"strict": true,
 		"target": "es2022",
 		"tsBuildInfoFile": "./.tsbuildinfo.typecheck",
-		"types": ["node"],
+		"types": ["node", "multer"],
 		"useDefineForClassFields": false
 	},
 	"exclude": ["dist"],
 	"extends": "../../tsconfig.base.json",
-	"include": ["src/**/*"]
+	"include": ["src/**/*", "prisma.config.ts"]
 }

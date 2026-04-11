@@ -1,7 +1,7 @@
 {
 	"author": "maxondev",
 	"dependencies": {
-		"@faker-js/faker": "^10.3.0",
+		"@faker-js/faker": "^10.4.0",
 		"@nestjs-modules/ioredis": "^2.0.2",
 		"@nestjs/common": "^11.1.12",
 		"@nestjs/config": "^4.0.3",

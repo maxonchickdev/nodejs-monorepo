@@ -10,6 +10,8 @@ import { EnvironmentsEnum } from "./common/enums/environments.enum.js";
 import { CatchEverythingFilter } from "./common/filters/catch-everything.filter.js";
 import { LoggingInterceptor } from "./common/interceptors/logger.interceptor.js";
 import { TimeoutInterceptor } from "./common/interceptors/timeout.interceptor.js";
+import type { AppType } from "./core/config/types/app.type.js";
+import type { EnvironmentType } from "./core/config/types/environment.type.js";
 
 const logger: Logger = new Logger("Bootstrap");
 
@@ -17,13 +19,15 @@ const logger: Logger = new Logger("Bootstrap");
 	const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
 	const configService = app.get(ConfigService);
-	const isProduction =
-		configService.getOrThrow<string>(`${ConfigKeyEnum.Environment}.nodeEnv`) ===
-		EnvironmentsEnum.Production;
 
-	const appPort = configService.getOrThrow<number>(
-		`${ConfigKeyEnum.App}.appPort`,
+	const environmentConfig = configService.getOrThrow<EnvironmentType>(
+		ConfigKeyEnum.Environment,
 	);
+
+	const isProduction =
+		environmentConfig.nodeEnv === EnvironmentsEnum.Production;
+
+	const appConfig = configService.getOrThrow<AppType>(ConfigKeyEnum.App);
 
 	app.enableVersioning({
 		defaultVersion: "1",
@@ -42,7 +46,10 @@ const logger: Logger = new Logger("Bootstrap");
 			.setTitle(appName)
 			.setDescription(appDescription)
 			.setVersion("1.0")
-			.addServer(`http://localhost:${appPort}`, "development")
+			.addServer(
+				`http://localhost:${appConfig.appPort}`,
+				EnvironmentsEnum.Development,
+			)
 			.addBearerAuth(
 				{
 					bearerFormat: "JWT",
@@ -65,7 +72,7 @@ const logger: Logger = new Logger("Bootstrap");
 		});
 
 		SwaggerModule.setup(swaggerPath, app, document, {
-			customSiteTitle: "Nestjs boilerplate",
+			customSiteTitle: appConfig.appName,
 			explorer: true,
 			jsonDocumentUrl: `${swaggerPath}/json`,
 			swaggerOptions: {
@@ -83,7 +90,7 @@ const logger: Logger = new Logger("Bootstrap");
 	);
 
 	app.enableCors({
-		allowedHeaders: "Content-Type, Authorization",
+		allowedHeaders: "Content-Type,Authorization",
 		credentials: true,
 		methods: "GET,POST,PUT,DELETE",
 		origin: "https://example.com",
@@ -98,14 +105,15 @@ const logger: Logger = new Logger("Bootstrap");
 
 	app.enableShutdownHooks();
 
-	await app.listen(appPort);
+	await app.listen(appConfig.appPort);
 
 	logger.log(
 		`Nestjs boilerplate admin application is running on: ${await app.getUrl()}`,
 	);
 
-	if (!isProduction)
+	if (!isProduction) {
 		logger.log(`Swagger docs available at: ${await app.getUrl()}`);
+	}
 })().catch((e) => {
 	logger.error(`Failed to start nestjs boilerplate admin application: ${e}`);
 });

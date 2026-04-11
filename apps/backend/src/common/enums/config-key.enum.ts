@@ -5,4 +5,5 @@ export enum ConfigKeyEnum {
 	Prisma = "prisma",
 	Jwt = "jwt",
 	RateLimit = "rate-limit",
+	S3 = "s3",
 }

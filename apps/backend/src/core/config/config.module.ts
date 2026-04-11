@@ -1,12 +1,14 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule as CoreConfigModule } from "@nestjs/config";
 import Joi from "joi";
+import { EnvironmentsEnum } from "../../common/enums/environments.enum";
 import { appRegister } from "./registers/app.register";
 import { environmentRegister } from "./registers/environment.register";
 import { jwtRegister } from "./registers/jwt.register";
 import { prismaRegister } from "./registers/prisma.register";
 import { rateLimitRegister } from "./registers/rate-limit.register";
 import { redisRegister } from "./registers/redis.register";
+import { s3Register } from "./registers/s3.register";
 
 @Module({
 	imports: [
@@ -20,42 +22,38 @@ import { redisRegister } from "./registers/redis.register";
 				environmentRegister,
 				jwtRegister,
 				rateLimitRegister,
+				s3Register,
 			],
 			validationSchema: Joi.object({
-				APP_DESCRIPTION: Joi.string(),
-				APP_NAME: Joi.string(),
+				NODE_ENV: Joi.string().default(EnvironmentsEnum.Development),
 
-				APP_PORT: Joi.number()
-					.port()
-					.default(3000)
-					.description("Port on which the application will run"),
-				APP_REQUEST_TIMEOUT: Joi.number()
-					.positive()
-					.default(5000)
-					.description("Request timeout in milliseconds"),
-				JWT_EXPIRES_IN: Joi.number().required().description("JWT expires in"),
-
-				JWT_SECRET: Joi.string().required().description("JWT secret"),
-				NODE_ENV: Joi.string()
-					.valid("development", "production", "test")
-					.default("development")
-					.description("Application environment"),
+				APP_PORT: Joi.number().port().positive().required(),
+				APP_REQUEST_TIMEOUT: Joi.number().positive().required(),
+				APP_NAME: Joi.string().required(),
+				APP_DESCRIPTION: Joi.string().required(),
+				APP_CORS_ALLOWED_HEADERS: Joi.string().required(),
+				APP_CORS_CREDENTIALS: Joi.boolean().required(),
+				APP_CORS_METHODS: Joi.string().required(),
+				APP_CORS_ORIGIN: Joi.string().required(),
 
 				POSTGRES_URL: Joi.string()
 					.uri({ scheme: ["postgresql", "postgres"] })
-					.required()
-					.description("Postgres connection URL"),
+					.required(),
 
 				REDIS_URL: Joi.string()
 					.uri({ scheme: ["redis"] })
-					.required()
-					.description("Redis connection URL"),
-				THROTTLE_LIMIT: Joi.number()
-					.required()
-					.description("Rate limiting limit"),
+					.required(),
 
-				THROTTLE_TTL: Joi.number().required().description("Rate limiting TTL"),
-				// TODO: add envs from .env
+				JWT_SECRET: Joi.string().required(),
+				JWT_EXPIRES_IN: Joi.number().required(),
+
+				THROTTLE_TTL: Joi.number().positive().required(),
+				THROTTLE_LIMIT: Joi.number().positive().required(),
+
+				AWS_REGION: Joi.string().required(),
+				AWS_ACCESS_KEY_ID: Joi.string().required(),
+				AWS_SECRET_ACCESS_KEY: Joi.string().required(),
+				AWS_S3_BUCKET_NAME: Joi.string().required(),
 			}),
 		}),
 	],

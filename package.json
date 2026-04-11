@@ -55,5 +55,10 @@
 		"packages/shared",
 		"apps/web",
 		"apps/backend"
-	]
+	],
+	"dependencies": {
+		"@aws-sdk/client-s3": "^3.1029.0",
+		"@aws-sdk/s3-request-presigner": "^3.1029.0",
+		"@types/multer": "^2.1.0"
+	}
 }
