@@ -8,7 +8,7 @@ export const appRegister = registerAs(ConfigKeyEnum.App, (): AppType => {
 	const appPort = Number(process.env.APP_PORT);
 	const appRequestTimeout = Number(process.env.APP_REQUEST_TIMEOUT);
 	const appCorsAllowedHeaders = process.env.APP_CORS_ALLOWED_HEADERS;
-	const appCorsCredentials = process.env.APP_CORS_CREDENTIALS === "true";
+	const appCorsCredentials = Boolean(process.env.APP_CORS_CREDENTIALS);
 	const appCorsMethods = process.env.APP_CORS_METHODS;
 	const appCorsOrigin = process.env.APP_CORS_ORIGIN;
 
@@ -18,9 +18,9 @@ export const appRegister = registerAs(ConfigKeyEnum.App, (): AppType => {
 		!appPort ||
 		!appRequestTimeout ||
 		!appCorsAllowedHeaders ||
-		!appCorsCredentials ||
 		!appCorsMethods ||
-		!appCorsOrigin
+		!appCorsOrigin ||
+		appCorsCredentials === undefined
 	) {
 		throw new Error("Missing some envs");
 	}

@@ -47,7 +47,7 @@ export class AuthController {
 	@ApiBody({
 		type: SignInDto,
 	})
-	public signIn(@UserId() userId: number): Promise<AuthRdo> {
+	public signIn(@UserId() userId: number): AuthRdo {
 		return this.authService.signIn(userId);
 	}
 

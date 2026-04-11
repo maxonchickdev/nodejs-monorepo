@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../generated/client";
+import { genSalt, hash } from "bcrypt";
 
 const NUMBER_OF_USERS = 5;
 
@@ -17,7 +18,7 @@ const main = async () => {
 				email: faker.internet.email(),
 				firstName: faker.person.firstName(),
 				lastName: faker.person.lastName(),
-				password: faker.internet.password(),
+				password: await hash(faker.internet.password(), await genSalt()),
 				username: faker.internet.username(),
 			},
 		});

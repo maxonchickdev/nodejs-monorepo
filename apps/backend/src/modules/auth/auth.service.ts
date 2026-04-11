@@ -23,7 +23,7 @@ export class AuthService {
 		this.jwtSecret = jwtConfig.secret;
 	}
 
-	public async signIn(userId: number): Promise<AuthRdo> {
+	public signIn(userId: number): AuthRdo {
 		const token = this.generateToken(userId);
 
 		return new AuthRdo(token);

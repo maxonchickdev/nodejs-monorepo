@@ -1,10 +1,11 @@
 import { randomUUID } from "node:crypto";
 import {
 	DeleteObjectCommand,
+	GetObjectCommand,
 	PutObjectCommand,
 	S3Client,
 } from "@aws-sdk/client-s3";
-// import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { ConfigKeyEnum } from "../../common/enums/config-key.enum";
@@ -56,7 +57,7 @@ export class S3Service {
 
 		await this.s3Client.send(command);
 
-		const url = await this.getFileUrl(key);
+		const url = await this.getPresignedSignedUrl(key);
 
 		return {
 			key,
@@ -64,21 +65,12 @@ export class S3Service {
 		};
 	}
 
-	private getFileUrl(key: string): string {
-		// TODO: check if this URL works in response
-		const url = `https://${this.bucketName}.s3.amazonaws.com/${key}`;
+	private async getPresignedSignedUrl(key: string): Promise<string> {
+		const command = new GetObjectCommand({
+			Bucket: this.bucketName,
+			Key: key,
+		});
 
-		return url;
+		return getSignedUrl(this.s3Client, command);
 	}
-
-	// private async getPresignedSignedUrl(key: string): Promise<string> {
-	// 	const command = new GetObjectCommand({
-	// 		Bucket: this.bucketName,
-	// 		Key: key,
-	// 	});
-
-	// 	return getSignedUrl(this.s3Client, command, {
-	// 		expiresIn: 60,
-	// 	});
-	// }
 }

@@ -1,12 +1,10 @@
 import {
 	Controller,
-	Delete,
 	FileTypeValidator,
 	Inject,
 	MaxFileSizeValidator,
 	ParseFilePipe,
 	Post,
-	Query,
 	UploadedFile,
 	UseGuards,
 	UseInterceptors,
@@ -41,8 +39,8 @@ export class S3Controller {
 			new ParseFilePipe({
 				validators: [
 					new MaxFileSizeValidator({
-						maxSize: 3 * 1024 * 1024,
-						message: "File is too large. Max file size is 10M",
+						maxSize: 5 * 1024 * 1024,
+						message: "File is too large. Max file size is 5MB",
 					}),
 					new FileTypeValidator({
 						fileType: ".(png|jpeg|jpg)",
@@ -55,10 +53,5 @@ export class S3Controller {
 		file: Express.Multer.File,
 	) {
 		return this.s3Service.uploadSingleFile(file);
-	}
-
-	@Delete("/:key")
-	public deleteFile(@Query("key") key: string): Promise<void> {
-		return this.s3Service.deleteFile(key);
 	}
 }
