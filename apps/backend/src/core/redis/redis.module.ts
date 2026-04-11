@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { RedisModule as CoreRedisModule } from "@nestjs-modules/ioredis";
 import { ConfigKeyEnum } from "../../common/enums/config-key.enum.js";
+import type { RedisType } from "../config/types/redis.type.js";
 import { RedisService } from "./redis.service.js";
 
 @Module({
@@ -10,15 +11,19 @@ import { RedisService } from "./redis.service.js";
 		CoreRedisModule.forRootAsync({
 			imports: [ConfigModule],
 			inject: [ConfigService],
-			useFactory: (configService: ConfigService) => ({
-				options: {
-					keyPrefix: "nestjs-boilerplate-cache:",
-				},
-				type: "single",
-				url: configService.getOrThrow<string>(
-					`${ConfigKeyEnum.Redis}.redisUrl`,
-				),
-			}),
+			useFactory: (configService: ConfigService) => {
+				const redisConfig = configService.getOrThrow<RedisType>(
+					ConfigKeyEnum.Redis,
+				);
+
+				return {
+					options: {
+						keyPrefix: "nestjs-boilerplate-cache:",
+					},
+					type: "single",
+					url: redisConfig.redisUrl,
+				};
+			},
 		}),
 	],
 	providers: [RedisService],

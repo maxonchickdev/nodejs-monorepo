@@ -4,6 +4,7 @@ import { JwtService } from "@nestjs/jwt";
 import { genSalt, hash } from "bcrypt";
 import { ConfigKeyEnum } from "../../common/enums/config-key.enum.js";
 import type { AuthPayloadType } from "../../common/types/auth-payload.type.js";
+import type { JwtType } from "../../core/config/types/jwt.type.js";
 import { AuthRepository } from "./auth.repository.js";
 import type { SignUpDto } from "./dtos/sign-up.dto.js";
 import { AuthRdo } from "./rdos/auth.rdo.js";
@@ -15,11 +16,11 @@ export class AuthService {
 	constructor(
 		@Inject(JwtService) private readonly jwtService: JwtService,
 		@Inject(AuthRepository) private readonly authRepository: AuthRepository,
-		@Inject(ConfigService) private readonly configService: ConfigService,
+		@Inject(ConfigService) readonly configService: ConfigService,
 	) {
-		this.jwtSecret = this.configService.getOrThrow<string>(
-			`${ConfigKeyEnum.Jwt}.secret`,
-		);
+		const jwtConfig = configService.getOrThrow<JwtType>(ConfigKeyEnum.Jwt);
+
+		this.jwtSecret = jwtConfig.secret;
 	}
 
 	public async signIn(userId: number): Promise<AuthRdo> {

@@ -1,35 +1,16 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { ApiSchema, PickType } from "@nestjs/swagger";
+import { SignUpDto } from "./sign-up.dto";
 
-export class SignInDto {
-	@ApiProperty({
-		description: "User email",
-		example: "Horacio4@hotmail.com",
-		nullable: false,
-		required: true,
-		type: String,
-	})
-	@IsEmail(
-		{},
-		{
-			message: "email validation error",
-		},
-	)
-	@IsNotEmpty({ message: "is not empty validation error" })
-	email: string;
-
-	@ApiProperty({
-		description: "User password",
-		example: "Pa$$wor1",
-		nullable: false,
-		required: true,
-		type: String,
-	})
-	@IsString({ message: "string validation error" })
-	@IsNotEmpty({ message: "empty validation error" })
-	password: string;
-
+@ApiSchema({
+	description: "Sign in DTO",
+	name: "SignInDto",
+})
+export class SignInDto extends PickType(SignUpDto, [
+	"email",
+	"password",
+] as const) {
 	constructor(email: string, password: string) {
+		super();
 		this.email = email;
 		this.password = password;
 	}

@@ -2,6 +2,7 @@ import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
+import type { JwtType } from "../../core/config/types/jwt.type.js";
 import { AuthRepository } from "../../modules/auth/auth.repository.js";
 import { ConfigKeyEnum } from "../enums/config-key.enum.js";
 
@@ -11,12 +12,12 @@ export class JwtStrategy extends PassportStrategy(Strategy, "jwt") {
 		@Inject(AuthRepository) private readonly authRepository: AuthRepository,
 		@Inject(ConfigService) readonly configService: ConfigService,
 	) {
+		const jwtConfig = configService.getOrThrow<JwtType>(ConfigKeyEnum.Jwt);
+
 		super({
 			ignoreExpiration: false,
 			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-			secretOrKey: configService.getOrThrow<string>(
-				`${ConfigKeyEnum.Jwt}.secret`,
-			),
+			secretOrKey: jwtConfig.secret,
 		});
 	}
 

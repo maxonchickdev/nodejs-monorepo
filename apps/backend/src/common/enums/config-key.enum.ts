@@ -1,7 +1,7 @@
 export enum ConfigKeyEnum {
 	Redis = "redis",
 	App = "app",
-	Environment = "development",
+	Environment = "environment",
 	Prisma = "prisma",
 	Jwt = "jwt",
 	RateLimit = "rate-limit",

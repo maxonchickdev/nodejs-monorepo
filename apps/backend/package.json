@@ -1,7 +1,8 @@
 {
 	"author": "maxondev",
 	"dependencies": {
-		"@faker-js/faker": "^10.4.0",
+		"@aws-sdk/client-s3": "^3.1029.0",
+		"@aws-sdk/s3-request-presigner": "^3.1029.0",
 		"@nestjs-modules/ioredis": "^2.0.2",
 		"@nestjs/common": "^11.1.12",
 		"@nestjs/config": "^4.0.3",
@@ -30,10 +31,12 @@
 	},
 	"description": "@nodejs-monorepo/backend application",
 	"devDependencies": {
+		"@faker-js/faker": "^10.4.0",
 		"@nestjs/cli": "^11.0.16",
 		"@nestjs/schematics": "^11.0.9",
 		"@types/bcrypt": "^6.0.0",
 		"@types/express": "^5.0.6",
+		"@types/multer": "^2.1.0",
 		"@types/node": "^22.19.7",
 		"@types/passport-jwt": "^4.0.1",
 		"@types/passport-local": "^1.0.38",

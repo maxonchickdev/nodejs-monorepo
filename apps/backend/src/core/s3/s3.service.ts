@@ -1,12 +1,10 @@
 import { randomUUID } from "node:crypto";
-import { extname } from "node:path";
 import {
 	DeleteObjectCommand,
-	GetObjectCommand,
 	PutObjectCommand,
 	S3Client,
 } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+// import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { ConfigKeyEnum } from "../../common/enums/config-key.enum";
@@ -31,32 +29,7 @@ export class S3Service {
 		this.bucketName = s3Config.awsS3BucketName;
 	}
 
-	async uploadFile(file: Express.Multer.File): Promise<string> {
-		const key = `${randomUUID()}${extname(file.originalname)}`;
-
-		const command = new PutObjectCommand({
-			Body: file.buffer,
-			Bucket: this.bucketName,
-			ContentType: file.mimetype,
-			Key: key,
-		});
-
-		await this.s3Client.send(command);
-		return key;
-	}
-
-	async getSignedUrl(key: string): Promise<string> {
-		const command = new GetObjectCommand({
-			Bucket: this.bucketName,
-			Key: key,
-		});
-
-		return getSignedUrl(this.s3Client, command, {
-			expiresIn: 3000,
-		});
-	}
-
-	async deleteFile(key: string): Promise<void> {
+	public async deleteFile(key: string): Promise<void> {
 		const command = new DeleteObjectCommand({
 			Bucket: this.bucketName,
 			Key: key,
@@ -65,28 +38,47 @@ export class S3Service {
 		await this.s3Client.send(command);
 	}
 
-	async generateUploadPresignedUrl(
-		fileName: string,
-		contentType: string,
-	): Promise<{
-		url: string;
-		key: string;
-	}> {
-		const key = `${randomUUID()}${extname(fileName)}`;
+	public async uploadSingleFile(
+		file: Express.Multer.File,
+	): Promise<{ key: string; url: string }> {
+		const key = randomUUID();
 
 		const command = new PutObjectCommand({
 			Bucket: this.bucketName,
-			ContentType: contentType,
 			Key: key,
+			Body: file.buffer,
+			ContentType: file.mimetype,
+			ACL: "public-read",
+			Metadata: {
+				originalName: file.originalname,
+			},
 		});
 
-		const url = await getSignedUrl(this.s3Client, command, {
-			expiresIn: 300,
-		});
+		await this.s3Client.send(command);
+
+		const url = await this.getFileUrl(key);
 
 		return {
 			key,
 			url,
 		};
 	}
+
+	private getFileUrl(key: string): string {
+		// TODO: check if this URL works in response
+		const url = `https://${this.bucketName}.s3.amazonaws.com/${key}`;
+
+		return url;
+	}
+
+	// private async getPresignedSignedUrl(key: string): Promise<string> {
+	// 	const command = new GetObjectCommand({
+	// 		Bucket: this.bucketName,
+	// 		Key: key,
+	// 	});
+
+	// 	return getSignedUrl(this.s3Client, command, {
+	// 		expiresIn: 60,
+	// 	});
+	// }
 }

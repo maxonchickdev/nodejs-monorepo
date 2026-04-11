@@ -1,4 +1,5 @@
-import { ApiProperty } from "@nestjs/swagger";
+// TODO: add validation messages
+import { ApiProperty, ApiSchema } from "@nestjs/swagger";
 import {
 	IsEmail,
 	IsNotEmpty,
@@ -8,6 +9,10 @@ import {
 	MinLength,
 } from "class-validator";
 
+@ApiSchema({
+	description: "Sign up DTO",
+	name: "SignUpDto",
+})
 export class SignUpDto {
 	@ApiProperty({
 		description: "Unique username",

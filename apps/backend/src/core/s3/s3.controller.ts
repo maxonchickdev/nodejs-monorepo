@@ -1,43 +1,64 @@
 import {
 	Controller,
-	Get,
+	Delete,
+	FileTypeValidator,
 	Inject,
+	MaxFileSizeValidator,
+	ParseFilePipe,
 	Post,
 	Query,
 	UploadedFile,
+	UseGuards,
 	UseInterceptors,
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
+import { ApiBody, ApiConsumes, ApiTags } from "@nestjs/swagger";
+import { JwtGuard } from "../../common/guards/jwt.guard";
 import { S3Service } from "./s3.service";
 
-@Controller()
+@UseGuards(JwtGuard)
+@ApiTags("Upload files")
+@Controller("s3")
 export class S3Controller {
 	constructor(@Inject(S3Service) private readonly s3Service: S3Service) {}
 
-	@Post()
+	@Post("upload-single-file")
 	@UseInterceptors(FileInterceptor("file"))
-	async uploadFile(@UploadedFile() file: Express.Multer.File) {
-		const key = await this.s3Service.uploadFile(file);
-		const url = await this.s3Service.getSignedUrl(key);
-
-		return { key, url };
-	}
-
-	@Get("download")
-	async downloadFile(@Query("key") key: string) {
-		const url = await this.s3Service.getSignedUrl(key);
-		return { url };
-	}
-
-	@Get("presign-upload")
-	async getUploadUrl(
-		@Query("fileName") fileName: string,
-		@Query("contentType") contentType: string,
+	@ApiConsumes("multipart/form-data")
+	@ApiBody({
+		schema: {
+			type: "object",
+			properties: {
+				file: {
+					type: "string",
+					format: "binary",
+				},
+			},
+		},
+	})
+	public uploadFile(
+		@UploadedFile(
+			new ParseFilePipe({
+				validators: [
+					new MaxFileSizeValidator({
+						maxSize: 3 * 1024 * 1024,
+						message: "File is too large. Max file size is 10M",
+					}),
+					new FileTypeValidator({
+						fileType: ".(png|jpeg|jpg)",
+						errorMessage: "File with this extention not allowed",
+					}),
+				],
+				fileIsRequired: true,
+			}),
+		)
+		file: Express.Multer.File,
 	) {
-		const { url, key } = await this.s3Service.generateUploadPresignedUrl(
-			fileName,
-			contentType,
-		);
-		return { url, key };
+		return this.s3Service.uploadSingleFile(file);
+	}
+
+	@Delete("/:key")
+	public deleteFile(@Query("key") key: string): Promise<void> {
+		return this.s3Service.deleteFile(key);
 	}
 }

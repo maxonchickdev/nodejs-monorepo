@@ -1,6 +1,11 @@
-import { Logger, VersioningType } from "@nestjs/common";
+import {
+	ClassSerializerInterceptor,
+	Logger,
+	ValidationPipe,
+	VersioningType,
+} from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { HttpAdapterHost, NestFactory } from "@nestjs/core";
+import { HttpAdapterHost, NestFactory, Reflector } from "@nestjs/core";
 import type { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import helmet from "helmet";
@@ -36,15 +41,11 @@ const logger: Logger = new Logger("Bootstrap");
 	});
 
 	if (!isProduction) {
-		const swaggerPath: string = "/api/docs";
-		const appName: string = configService.getOrThrow<string>("APP_NAME");
-		const appDescription: string = configService.getOrThrow<string>(
-			`${ConfigKeyEnum.App}.appDescription`,
-		);
+		const swaggerPath = "/api/docs";
 
 		const swaggerConfig = new DocumentBuilder()
-			.setTitle(appName)
-			.setDescription(appDescription)
+			.setTitle(appConfig.appName)
+			.setDescription(appConfig.appDescription)
 			.setVersion("1.0")
 			.addServer(
 				`http://localhost:${appConfig.appPort}`,
@@ -90,17 +91,26 @@ const logger: Logger = new Logger("Bootstrap");
 	);
 
 	app.enableCors({
-		allowedHeaders: "Content-Type,Authorization",
-		credentials: true,
-		methods: "GET,POST,PUT,DELETE",
-		origin: "https://example.com",
+		allowedHeaders: appConfig.appCorsAllowedHeaders,
+		credentials: appConfig.appCorsCredentials,
+		methods: appConfig.appCorsMethods,
+		origin: appConfig.appCorsOrigin,
 	});
 
 	app.use(helmet());
 
+	app.useGlobalPipes(
+		new ValidationPipe({
+			whitelist: true,
+			forbidNonWhitelisted: true,
+			transform: true,
+		}),
+	);
+
 	app.useGlobalInterceptors(
 		new TimeoutInterceptor(configService),
 		new LoggingInterceptor(configService),
+		new ClassSerializerInterceptor(app.get(Reflector)),
 	);
 
 	app.enableShutdownHooks();

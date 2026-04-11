@@ -4,11 +4,13 @@ import {
 	type ExceptionFilter,
 	HttpException,
 	HttpStatus,
+	Inject,
 	Logger,
 } from "@nestjs/common";
-import type { ConfigService } from "@nestjs/config";
-import type { HttpAdapterHost } from "@nestjs/core";
+import { ConfigService } from "@nestjs/config";
+import { HttpAdapterHost } from "@nestjs/core";
 import type { Prisma } from "@prisma/generated/client.js";
+import type { EnvironmentType } from "../../core/config/types/environment.type.js";
 import { ConfigKeyEnum } from "../enums/config-key.enum.js";
 import { EnvironmentsEnum } from "../enums/environments.enum.js";
 import type {
@@ -31,11 +33,19 @@ const INTERNAL_ERROR_TYPE = "InternalServerErrorException";
 @Catch()
 export class CatchEverythingFilter implements ExceptionFilter {
 	private readonly logger = new Logger(CatchEverythingFilter.name);
+	private readonly isProduction;
 
 	constructor(
-		private readonly httpAdapterHost: HttpAdapterHost,
-		private readonly configService: ConfigService,
-	) {}
+		@Inject(HttpAdapterHost) private readonly httpAdapterHost: HttpAdapterHost,
+		@Inject(ConfigService) readonly configService: ConfigService,
+	) {
+		const environmentConfig = configService.getOrThrow<EnvironmentType>(
+			ConfigKeyEnum.Environment,
+		);
+
+		this.isProduction =
+			environmentConfig.nodeEnv === EnvironmentsEnum.Production;
+	}
 
 	catch(exception: unknown, host: ArgumentsHost): void {
 		const { httpAdapter } = this.httpAdapterHost;
@@ -135,8 +145,7 @@ export class CatchEverythingFilter implements ExceptionFilter {
 		error: string;
 		message: string | string[];
 	} {
-		const isProduction = this.isProduction();
-		const message = isProduction ? "Validation failed" : error.message;
+		const message = this.isProduction ? "Validation failed" : error.message;
 
 		return {
 			error: "PrismaClientValidationError",
@@ -150,11 +159,9 @@ export class CatchEverythingFilter implements ExceptionFilter {
 		error: string;
 		message: string | string[];
 	} {
-		const isProduction = this.isProduction();
-
 		return {
 			error: INTERNAL_ERROR_TYPE,
-			message: isProduction
+			message: this.isProduction
 				? INTERNAL_ERROR_MESSAGE
 				: exception instanceof Error
 					? exception.message
@@ -179,13 +186,6 @@ export class CatchEverythingFilter implements ExceptionFilter {
 				: "Record not found";
 		}
 		return error.message;
-	}
-
-	private isProduction(): boolean {
-		return (
-			this.configService.get<string>(`${ConfigKeyEnum.Environment}.nodeEnv`) ===
-			EnvironmentsEnum.Production
-		);
 	}
 
 	private isPrismaKnownRequestError(

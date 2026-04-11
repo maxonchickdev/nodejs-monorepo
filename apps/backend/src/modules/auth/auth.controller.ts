@@ -19,7 +19,7 @@ import { UserId } from "../../common/decorators/user-id.decorator.js";
 import { LocalGuard } from "../../common/guards/local.guard.js";
 import { AuthService } from "./auth.service.js";
 import { SignInDto } from "./dtos/sign-in.dto.js";
-import type { SignUpDto } from "./dtos/sign-up.dto.js";
+import { SignUpDto } from "./dtos/sign-up.dto.js";
 import { AuthRdo } from "./rdos/auth.rdo.js";
 
 @ApiTags("Authentication & Authorization")
@@ -63,6 +63,9 @@ export class AuthController {
 	})
 	@ApiUnauthorizedResponse({
 		description: "",
+	})
+	@ApiBody({
+		type: SignUpDto,
 	})
 	public signUp(@Body() signUpDto: SignUpDto): Promise<AuthRdo> {
 		return this.authService.signUp(signUpDto);
