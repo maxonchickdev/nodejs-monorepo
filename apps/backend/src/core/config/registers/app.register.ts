@@ -8,7 +8,7 @@ export const appRegister = registerAs(ConfigKeyEnum.App, (): AppType => {
 	const appPort = Number(process.env.APP_PORT);
 	const appRequestTimeout = Number(process.env.APP_REQUEST_TIMEOUT);
 	const appCorsAllowedHeaders = process.env.APP_CORS_ALLOWED_HEADERS;
-	const appCorsCredentials = Boolean(process.env.APP_CORS_CREDENTIALS);
+	const appCorsCredentials = Boolean(process.env.APP_CORS_CREDENTIALS); // TODO: check this
 	const appCorsMethods = process.env.APP_CORS_METHODS;
 	const appCorsOrigin = process.env.APP_CORS_ORIGIN;
 

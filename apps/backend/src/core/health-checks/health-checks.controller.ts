@@ -1,3 +1,4 @@
+// TODO: add all possible responses
 import { Controller, Get, Inject } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import type { HealthCheckResult } from "@nestjs/terminus";

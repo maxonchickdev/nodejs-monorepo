@@ -1,3 +1,4 @@
+// TODO: erase joi configs
 import { Module } from "@nestjs/common";
 import { ConfigModule as CoreConfigModule } from "@nestjs/config";
 import Joi from "joi";
