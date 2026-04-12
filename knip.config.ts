@@ -2,12 +2,7 @@ import type { KnipConfig } from "knip";
 
 const config: KnipConfig = {
 	$schema: "https://unpkg.com/knip@5/schema.json",
-	ignoreDependencies: [
-		"source-map-support",
-		"@commitlint/types",
-		"ioredis",
-		"@aws-sdk/s3-request-presigner",
-	],
+	ignoreDependencies: ["source-map-support"],
 	typescript: {
 		config: [
 			"tsconfig.base.json",
@@ -24,6 +19,7 @@ const config: KnipConfig = {
 				"src/common/enums/**/*.ts",
 			],
 			project: ["src/**/*.ts"],
+			ignoreDependencies: ["@aws-sdk/s3-request-presigner"],
 		},
 		"apps/web": {
 			entry: ["index.html"],
