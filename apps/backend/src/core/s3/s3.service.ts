@@ -1,11 +1,11 @@
 import { randomUUID } from "node:crypto";
 import {
 	DeleteObjectCommand,
-	GetObjectCommand,
 	PutObjectCommand,
+	type PutObjectCommandInput,
 	S3Client,
 } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+// import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { ConfigKeyEnum } from "../../common/enums/config-key.enum";
@@ -15,6 +15,7 @@ import type { S3Type } from "../config/types/s3.type";
 export class S3Service {
 	private readonly s3Client: S3Client;
 	private readonly bucketName: string;
+	private readonly region: string;
 
 	constructor(@Inject(ConfigService) readonly configService: ConfigService) {
 		const s3Config = configService.getOrThrow<S3Type>(ConfigKeyEnum.S3);
@@ -28,6 +29,7 @@ export class S3Service {
 		});
 
 		this.bucketName = s3Config.awsS3BucketName;
+		this.region = s3Config.awsRegion;
 	}
 
 	public async deleteFile(key: string): Promise<void> {
@@ -39,38 +41,26 @@ export class S3Service {
 		await this.s3Client.send(command);
 	}
 
-	public async uploadSingleFile(
+	public async uploadFile(
 		file: Express.Multer.File,
 	): Promise<{ key: string; url: string }> {
 		const key = randomUUID();
 
-		const command = new PutObjectCommand({
+		const input: PutObjectCommandInput = {
 			Bucket: this.bucketName,
 			Key: key,
 			Body: file.buffer,
 			ContentType: file.mimetype,
 			ACL: "public-read",
-			Metadata: {
-				originalName: file.originalname,
-			},
-		});
+		};
+
+		const command = new PutObjectCommand(input);
 
 		await this.s3Client.send(command);
 
-		const url = await this.getPresignedSignedUrl(key);
-
 		return {
+			url: `https://${this.bucketName}.s3.${this.region}.amazonaws.com/${key}`,
 			key,
-			url,
 		};
-	}
-
-	private async getPresignedSignedUrl(key: string): Promise<string> {
-		const command = new GetObjectCommand({
-			Bucket: this.bucketName,
-			Key: key,
-		});
-
-		return getSignedUrl(this.s3Client, command);
 	}
 }

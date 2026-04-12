@@ -51,7 +51,7 @@ export class S3Controller {
 			}),
 		)
 		file: Express.Multer.File,
-	) {
-		return this.s3Service.uploadSingleFile(file);
+	): Promise<{ key: string; url: string }> {
+		return this.s3Service.uploadFile(file);
 	}
 }
