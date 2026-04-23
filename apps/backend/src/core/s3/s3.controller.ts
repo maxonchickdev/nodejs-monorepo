@@ -12,13 +12,13 @@ import {
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { ApiBody, ApiConsumes, ApiTags } from "@nestjs/swagger";
-import { JwtGuard } from "../../common/guards/jwt.guard";
+import { JwtGuard } from "../../common/guards/guards";
 import { S3Service } from "./s3.service";
 
 @UseGuards(JwtGuard)
 @ApiTags("Upload files")
 @Controller("s3")
-export class S3Controller {
+class S3Controller {
 	constructor(@Inject(S3Service) private readonly s3Service: S3Service) {}
 
 	@Post("upload-single-file")
@@ -56,3 +56,5 @@ export class S3Controller {
 		return this.s3Service.uploadFile(file);
 	}
 }
+
+export { S3Controller };

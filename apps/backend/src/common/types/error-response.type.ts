@@ -1,4 +1,4 @@
-export type ErrorResponseBody = {
+type ErrorResponseBodyType = {
 	statusCode: number;
 	error: string;
 	message: string | string[];
@@ -6,6 +6,8 @@ export type ErrorResponseBody = {
 	timestamp?: string;
 };
 
-export type HttpExceptionResponse =
+type HttpExceptionResponseType =
 	| string
 	| { message?: string | string[]; error?: string; statusCode?: number };
+
+export type { ErrorResponseBodyType, HttpExceptionResponseType };

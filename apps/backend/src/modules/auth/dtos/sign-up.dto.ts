@@ -13,7 +13,7 @@ import {
 	description: "Sign up DTO",
 	name: "SignUpDto",
 })
-export class SignUpDto {
+class SignUpDto {
 	@ApiProperty({
 		description: "Unique username",
 		example: "Eldred_Ondricka",
@@ -144,3 +144,5 @@ export class SignUpDto {
 		this.password = password;
 	}
 }
+
+export { SignUpDto };

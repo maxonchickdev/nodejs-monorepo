@@ -1,10 +1,10 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { PrismaService } from "../../core/prisma/prisma.service.js";
 import type { SignUpDto } from "./dtos/sign-up.dto.js";
-import type { UserRdo } from "./rdos/user.rdo.js";
+import type { UserRdo } from "./rdos/rdos.js";
 
 @Injectable()
-export class AuthRepository {
+class AuthRepository {
 	constructor(
 		@Inject(PrismaService) private readonly prismaService: PrismaService,
 	) {}
@@ -31,3 +31,5 @@ export class AuthRepository {
 		});
 	}
 }
+
+export { AuthRepository };

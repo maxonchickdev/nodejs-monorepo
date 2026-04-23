@@ -5,13 +5,12 @@ import { SignUpDto } from "./sign-up.dto";
 	description: "Sign in DTO",
 	name: "SignInDto",
 })
-export class SignInDto extends PickType(SignUpDto, [
-	"email",
-	"password",
-] as const) {
+class SignInDto extends PickType(SignUpDto, ["email", "password"] as const) {
 	constructor(email: string, password: string) {
 		super();
 		this.email = email;
 		this.password = password;
 	}
 }
+
+export { SignInDto };

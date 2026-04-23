@@ -10,11 +10,15 @@ import type { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import helmet from "helmet";
 import { AppModule } from "./app.module.js";
-import { ConfigKeyEnum } from "./common/enums/config-key.enum.js";
-import { EnvironmentsEnum } from "./common/enums/environments.enum.js";
-import { CatchEverythingFilter } from "./common/filters/catch-everything.filter.js";
-import { LoggingInterceptor } from "./common/interceptors/logger.interceptor.js";
-import { TimeoutInterceptor } from "./common/interceptors/timeout.interceptor.js";
+import {
+	ConfigKeyConstant,
+	EnvironmentsConstant,
+} from "./common/constants/constants.js";
+import { CatchEverythingFilter } from "./common/filters/filters.js";
+import {
+	LoggingInterceptor,
+	TimeoutInterceptor,
+} from "./common/interceptors/interceptors.js";
 import type { AppType } from "./core/config/types/app.type.js";
 import type { EnvironmentType } from "./core/config/types/environment.type.js";
 
@@ -26,13 +30,13 @@ const logger: Logger = new Logger("Bootstrap");
 	const configService = app.get(ConfigService);
 
 	const environmentConfig = configService.getOrThrow<EnvironmentType>(
-		ConfigKeyEnum.Environment,
+		ConfigKeyConstant.environment,
 	);
 
 	const isProduction =
-		environmentConfig.nodeEnv === EnvironmentsEnum.Production;
+		environmentConfig.nodeEnv === EnvironmentsConstant.production;
 
-	const appConfig = configService.getOrThrow<AppType>(ConfigKeyEnum.App);
+	const appConfig = configService.getOrThrow<AppType>(ConfigKeyConstant.app);
 
 	app.enableVersioning({
 		defaultVersion: "1",
@@ -49,7 +53,7 @@ const logger: Logger = new Logger("Bootstrap");
 			.setVersion("1.0")
 			.addServer(
 				`http://localhost:${appConfig.appPort}`,
-				EnvironmentsEnum.Development,
+				EnvironmentsConstant.development,
 			)
 			.addBearerAuth(
 				{

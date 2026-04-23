@@ -1,4 +1,4 @@
-export type AppType = {
+type AppType = {
 	appPort: number;
 	appRequestTimeout: number;
 	appName: string;
@@ -8,3 +8,5 @@ export type AppType = {
 	appCorsMethods: string;
 	appCorsOrigin: string;
 };
+
+export type { AppType };

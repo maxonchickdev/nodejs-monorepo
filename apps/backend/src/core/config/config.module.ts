@@ -2,31 +2,33 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule as CoreConfigModule } from "@nestjs/config";
 import Joi from "joi";
-import { EnvironmentsEnum } from "../../common/enums/environments.enum";
-import { appRegister } from "./registers/app.register";
-import { environmentRegister } from "./registers/environment.register";
-import { jwtRegister } from "./registers/jwt.register";
-import { prismaRegister } from "./registers/prisma.register";
-import { rateLimitRegister } from "./registers/rate-limit.register";
-import { redisRegister } from "./registers/redis.register";
-import { s3Register } from "./registers/s3.register";
+import { EnvironmentsConstant } from "../../common/constants/environments.constant";
+import {
+	AppRegister,
+	EnvironmentRegister,
+	JwtRegister,
+	PrismaRegister,
+	RateLimitRegister,
+	RedisRegister,
+	S3Register,
+} from "./registers/registers";
 
 @Module({
 	imports: [
 		CoreConfigModule.forRoot({
 			envFilePath: ["../../.env"],
-			isGlobal: true,
+			isGlobal: false,
 			load: [
-				redisRegister,
-				appRegister,
-				prismaRegister,
-				environmentRegister,
-				jwtRegister,
-				rateLimitRegister,
-				s3Register,
+				RedisRegister,
+				AppRegister,
+				PrismaRegister,
+				EnvironmentRegister,
+				JwtRegister,
+				RateLimitRegister,
+				S3Register,
 			],
 			validationSchema: Joi.object({
-				NODE_ENV: Joi.string().default(EnvironmentsEnum.Development),
+				NODE_ENV: Joi.string().default(EnvironmentsConstant.development),
 
 				APP_PORT: Joi.number().port().positive().required(),
 				APP_REQUEST_TIMEOUT: Joi.number().positive().required(),
@@ -58,5 +60,8 @@ import { s3Register } from "./registers/s3.register";
 			}),
 		}),
 	],
+	exports: [CoreConfigModule],
 })
-export class ConfigModule {}
+class ConfigModule {}
+
+export { ConfigModule };

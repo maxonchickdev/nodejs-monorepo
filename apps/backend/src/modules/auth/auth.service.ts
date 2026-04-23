@@ -2,15 +2,15 @@ import { ConflictException, Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import { genSalt, hash } from "bcrypt";
-import { ConfigKeyEnum } from "../../common/enums/config-key.enum.js";
-import type { AuthPayloadType } from "../../common/types/auth-payload.type.js";
+import { ConfigKeyConstant } from "../../common/constants/config-key.constant.js";
+import type { AuthPayload } from "../../common/types/types.js";
 import type { JwtType } from "../../core/config/types/jwt.type.js";
 import { AuthRepository } from "./auth.repository.js";
 import type { SignUpDto } from "./dtos/sign-up.dto.js";
 import { AuthRdo } from "./rdos/auth.rdo.js";
 
 @Injectable()
-export class AuthService {
+class AuthService {
 	private readonly jwtSecret: string;
 
 	constructor(
@@ -18,7 +18,7 @@ export class AuthService {
 		@Inject(AuthRepository) private readonly authRepository: AuthRepository,
 		@Inject(ConfigService) readonly configService: ConfigService,
 	) {
-		const jwtConfig = configService.getOrThrow<JwtType>(ConfigKeyEnum.Jwt);
+		const jwtConfig = configService.getOrThrow<JwtType>(ConfigKeyConstant.jwt);
 
 		this.jwtSecret = jwtConfig.secret;
 	}
@@ -48,13 +48,10 @@ export class AuthService {
 		return new AuthRdo(token);
 	}
 
-	public async validateToken(token: string): Promise<AuthPayloadType> {
-		const authPayload = await this.jwtService.verifyAsync<AuthPayloadType>(
-			token,
-			{
-				secret: this.jwtSecret,
-			},
-		);
+	public async validateToken(token: string): Promise<AuthPayload> {
+		const authPayload = await this.jwtService.verifyAsync<AuthPayload>(token, {
+			secret: this.jwtSecret,
+		});
 
 		return {
 			userId: authPayload.userId,
@@ -70,3 +67,5 @@ export class AuthService {
 		return this.jwtService.sign({ userId });
 	}
 }
+
+export { AuthService };

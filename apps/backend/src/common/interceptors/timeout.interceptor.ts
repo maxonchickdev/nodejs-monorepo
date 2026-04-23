@@ -15,14 +15,14 @@ import {
 	timeout,
 } from "rxjs";
 import type { AppType } from "../../core/config/types/app.type.js";
-import { ConfigKeyEnum } from "../enums/config-key.enum.js";
+import { ConfigKeyConstant } from "../constants/config-key.constant.js";
 
 @Injectable()
-export class TimeoutInterceptor implements NestInterceptor {
+class TimeoutInterceptor implements NestInterceptor {
 	private readonly appRequestTimeout: number;
 
 	constructor(@Inject(ConfigService) readonly configService: ConfigService) {
-		const appConfig = configService.getOrThrow<AppType>(ConfigKeyEnum.App);
+		const appConfig = configService.getOrThrow<AppType>(ConfigKeyConstant.app);
 
 		this.appRequestTimeout = appConfig.appRequestTimeout;
 	}
@@ -42,3 +42,5 @@ export class TimeoutInterceptor implements NestInterceptor {
 		);
 	}
 }
+
+export { TimeoutInterceptor };

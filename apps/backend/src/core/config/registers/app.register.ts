@@ -1,8 +1,8 @@
 import { registerAs } from "@nestjs/config";
-import { ConfigKeyEnum } from "../../../common/enums/config-key.enum.js";
-import type { AppType } from "../types/app.type.js";
+import { ConfigKeyConstant } from "../../../common/constants/config-key.constant.js";
+import type { AppType } from "../types/types.js";
 
-export const appRegister = registerAs(ConfigKeyEnum.App, (): AppType => {
+const AppRegister = registerAs(ConfigKeyConstant.app, (): AppType => {
 	const appDescription = process.env.APP_DESCRIPTION;
 	const appName = process.env.APP_NAME;
 	const appPort = Number(process.env.APP_PORT);
@@ -36,3 +36,5 @@ export const appRegister = registerAs(ConfigKeyEnum.App, (): AppType => {
 		appCorsOrigin,
 	};
 });
+
+export { AppRegister };

@@ -1,8 +1,8 @@
 import { registerAs } from "@nestjs/config";
-import { ConfigKeyEnum } from "../../../common/enums/config-key.enum";
-import type { JwtType } from "../types/jwt.type";
+import { ConfigKeyConstant } from "../../../common/constants/config-key.constant";
+import type { JwtType } from "../types/types";
 
-export const jwtRegister = registerAs(ConfigKeyEnum.Jwt, (): JwtType => {
+const JwtRegister = registerAs(ConfigKeyConstant.jwt, (): JwtType => {
 	const expiresIn = Number(process.env.JWT_EXPIRES_IN);
 	const secret = process.env.JWT_SECRET;
 
@@ -15,3 +15,5 @@ export const jwtRegister = registerAs(ConfigKeyEnum.Jwt, (): JwtType => {
 		secret,
 	};
 });
+
+export { JwtRegister };

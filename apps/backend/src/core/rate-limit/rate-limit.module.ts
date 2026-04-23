@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { APP_GUARD } from "@nestjs/core";
 import { seconds, ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
-import { ConfigKeyEnum } from "../../common/enums/config-key.enum.js";
+import { ConfigKeyConstant } from "../../common/constants/config-key.constant.js";
 import type { RateLimitType } from "../config/types/rate-limit.type.js";
 
 @Module({
@@ -12,7 +12,7 @@ import type { RateLimitType } from "../config/types/rate-limit.type.js";
 			inject: [ConfigService],
 			useFactory: (configService: ConfigService) => {
 				const rateLimitConfig = configService.getOrThrow<RateLimitType>(
-					ConfigKeyEnum.RateLimit,
+					ConfigKeyConstant.rateLimit,
 				);
 
 				return {
@@ -34,4 +34,6 @@ import type { RateLimitType } from "../config/types/rate-limit.type.js";
 		},
 	],
 })
-export class RateLimitModule {}
+class RateLimitModule {}
+
+export { RateLimitModule };

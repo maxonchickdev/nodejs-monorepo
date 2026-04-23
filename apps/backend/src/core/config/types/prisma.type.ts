@@ -1,3 +1,5 @@
-export type PrismaType = {
+type PrismaType = {
 	postgresUrl: string;
 };
+
+export type { PrismaType };

@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { RedisModule as CoreRedisModule } from "@nestjs-modules/ioredis";
-import { ConfigKeyEnum } from "../../common/enums/config-key.enum.js";
+import { ConfigKeyConstant } from "../../common/constants/config-key.constant.js";
 import type { RedisType } from "../config/types/redis.type.js";
 import { RedisService } from "./redis.service.js";
 
@@ -13,7 +13,7 @@ import { RedisService } from "./redis.service.js";
 			inject: [ConfigService],
 			useFactory: (configService: ConfigService) => {
 				const redisConfig = configService.getOrThrow<RedisType>(
-					ConfigKeyEnum.Redis,
+					ConfigKeyConstant.redis,
 				);
 
 				return {
@@ -28,4 +28,6 @@ import { RedisService } from "./redis.service.js";
 	],
 	providers: [RedisService],
 })
-export class RedisModule {}
+class RedisModule {}
+
+export { RedisModule };

@@ -1,3 +1,5 @@
-export type RedisType = {
+type RedisType = {
 	redisUrl: string;
 };
+
+export type { RedisType };

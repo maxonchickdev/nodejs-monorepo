@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { JwtModule as CoreJwtModule, type JwtModuleOptions } from "@nestjs/jwt";
-import { ConfigKeyEnum } from "../../common/enums/config-key.enum.js";
+import { ConfigKeyConstant } from "../../common/constants/config-key.constant.js";
 import type { JwtType } from "../config/types/jwt.type.js";
 
 @Module({
@@ -10,7 +10,9 @@ import type { JwtType } from "../config/types/jwt.type.js";
 			imports: [ConfigModule],
 			inject: [ConfigService],
 			useFactory: (configService: ConfigService): JwtModuleOptions => {
-				const jwtConfig = configService.getOrThrow<JwtType>(ConfigKeyEnum.Jwt);
+				const jwtConfig = configService.getOrThrow<JwtType>(
+					ConfigKeyConstant.jwt,
+				);
 
 				return {
 					secret: jwtConfig.secret,
@@ -23,4 +25,6 @@ import type { JwtType } from "../config/types/jwt.type.js";
 	],
 	exports: [CoreJwtModule],
 })
-export class JwtModule {}
+class JwtModule {}
+
+export { JwtModule };

@@ -1,4 +1,6 @@
-export type JwtType = {
+type JwtType = {
 	secret: string;
 	expiresIn: number;
 };
+
+export type { JwtType };

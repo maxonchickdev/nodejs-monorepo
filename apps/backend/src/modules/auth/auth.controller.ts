@@ -16,16 +16,15 @@ import {
 	ApiTags,
 	ApiUnauthorizedResponse,
 } from "@nestjs/swagger";
-import { UserId } from "../../common/decorators/user-id.decorator.js";
-import { LocalGuard } from "../../common/guards/local.guard.js";
+import { UserIdDecorator } from "../../common/decorators/decorators";
+import { LocalGuard } from "../../common/guards/guards";
 import { AuthService } from "./auth.service.js";
-import { SignInDto } from "./dtos/sign-in.dto.js";
-import { SignUpDto } from "./dtos/sign-up.dto.js";
-import { AuthRdo } from "./rdos/auth.rdo.js";
+import { SignInDto, SignUpDto } from "./dtos/dtos";
+import { AuthRdo } from "./rdos/rdos";
 
 @ApiTags("Authentication & Authorization")
 @Controller("auth")
-export class AuthController {
+class AuthController {
 	constructor(@Inject(AuthService) private readonly authService: AuthService) {}
 
 	@Post("sign-in")
@@ -48,7 +47,7 @@ export class AuthController {
 	@ApiBody({
 		type: SignInDto,
 	})
-	public signIn(@UserId() userId: number): AuthRdo {
+	public signIn(@UserIdDecorator() userId: number): AuthRdo {
 		return this.authService.signIn(userId);
 	}
 
@@ -72,3 +71,5 @@ export class AuthController {
 		return this.authService.signUp(signUpDto);
 	}
 }
+
+export { AuthController };

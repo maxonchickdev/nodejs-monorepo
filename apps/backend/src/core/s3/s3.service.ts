@@ -8,17 +8,17 @@ import {
 // import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { ConfigKeyEnum } from "../../common/enums/config-key.enum";
+import { ConfigKeyConstant } from "../../common/constants/config-key.constant";
 import type { S3Type } from "../config/types/s3.type";
 
 @Injectable()
-export class S3Service {
+class S3Service {
 	private readonly s3Client: S3Client;
 	private readonly bucketName: string;
 	private readonly region: string;
 
 	constructor(@Inject(ConfigService) readonly configService: ConfigService) {
-		const s3Config = configService.getOrThrow<S3Type>(ConfigKeyEnum.S3);
+		const s3Config = configService.getOrThrow<S3Type>(ConfigKeyConstant.s3);
 
 		this.s3Client = new S3Client({
 			credentials: {
@@ -64,3 +64,5 @@ export class S3Service {
 		};
 	}
 }
+
+export { S3Service };

@@ -7,17 +7,17 @@ import {
 import { ConfigService } from "@nestjs/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../../../prisma/generated/client.js";
-import { ConfigKeyEnum } from "../../common/enums/config-key.enum.js";
+import { ConfigKeyConstant } from "../../common/constants/config-key.constant.js";
 import type { PrismaType } from "../config/types/prisma.type.js";
 
 @Injectable()
-export class PrismaService
+class PrismaService
 	extends PrismaClient
 	implements OnModuleInit, OnModuleDestroy
 {
 	constructor(@Inject(ConfigService) readonly configService: ConfigService) {
 		const prismaConfig = configService.getOrThrow<PrismaType>(
-			ConfigKeyEnum.Prisma,
+			ConfigKeyConstant.prisma,
 		);
 
 		const adapter: PrismaPg = new PrismaPg({
@@ -34,3 +34,5 @@ export class PrismaService
 		await this.$disconnect();
 	}
 }
+
+export { PrismaService };

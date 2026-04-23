@@ -12,12 +12,12 @@ import { ConfigService } from "@nestjs/config";
 import { HttpAdapterHost } from "@nestjs/core";
 import type { Prisma } from "@prisma/generated/client.js";
 import type { EnvironmentType } from "../../core/config/types/environment.type.js";
-import { ConfigKeyEnum } from "../enums/config-key.enum.js";
-import { EnvironmentsEnum } from "../enums/environments.enum.js";
+import { ConfigKeyConstant } from "../constants/config-key.constant.js";
+import { EnvironmentsConstant } from "../constants/environments.constant.js";
 import type {
-	ErrorResponseBody,
-	HttpExceptionResponse,
-} from "../types/error-response.type.js";
+	ErrorResponseBodyType,
+	HttpExceptionResponseType,
+} from "../types/types.js";
 
 const PRISMA_ERROR_MAP: Record<string, HttpStatus> = {
 	P2000: HttpStatus.BAD_REQUEST,
@@ -32,7 +32,7 @@ const INTERNAL_ERROR_MESSAGE = "Internal server error";
 const INTERNAL_ERROR_TYPE = "InternalServerErrorException";
 
 @Catch()
-export class CatchEverythingFilter implements ExceptionFilter {
+class CatchEverythingFilter implements ExceptionFilter {
 	private readonly logger = new Logger(CatchEverythingFilter.name);
 	private readonly isProduction;
 
@@ -41,11 +41,11 @@ export class CatchEverythingFilter implements ExceptionFilter {
 		@Inject(ConfigService) readonly configService: ConfigService,
 	) {
 		const environmentConfig = configService.getOrThrow<EnvironmentType>(
-			ConfigKeyEnum.Environment,
+			ConfigKeyConstant.environment,
 		);
 
 		this.isProduction =
-			environmentConfig.nodeEnv === EnvironmentsEnum.Production;
+			environmentConfig.nodeEnv === EnvironmentsConstant.production;
 	}
 
 	catch(exception: unknown, host: ArgumentsHost): void {
@@ -55,7 +55,7 @@ export class CatchEverythingFilter implements ExceptionFilter {
 
 		const { statusCode, error, message } = this.normalizeException(exception);
 
-		const responseBody: ErrorResponseBody = {
+		const responseBody: ErrorResponseBodyType = {
 			error,
 			message,
 			path: httpAdapter.getRequestUrl(request),
@@ -99,7 +99,7 @@ export class CatchEverythingFilter implements ExceptionFilter {
 		message: string | string[];
 	} {
 		const statusCode = exception.getStatus();
-		const response = exception.getResponse() as HttpExceptionResponse;
+		const response = exception.getResponse() as HttpExceptionResponseType;
 
 		if (typeof response === "string") {
 			return {
@@ -211,3 +211,5 @@ export class CatchEverythingFilter implements ExceptionFilter {
 		);
 	}
 }
+
+export { CatchEverythingFilter };

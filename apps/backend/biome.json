@@ -4,6 +4,13 @@
 	"files": {
 		"includes": ["**", "!prisma", "!dist"]
 	},
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
+	},
 	"javascript": {
 		"parser": {
 			"unsafeParameterDecoratorsEnabled": true

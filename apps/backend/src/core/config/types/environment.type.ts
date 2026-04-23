@@ -1,3 +1,5 @@
-export type EnvironmentType = {
+type EnvironmentType = {
 	nodeEnv: string;
 };
+
+export type { EnvironmentType };

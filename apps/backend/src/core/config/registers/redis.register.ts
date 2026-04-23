@@ -1,8 +1,8 @@
 import { registerAs } from "@nestjs/config";
-import { ConfigKeyEnum } from "../../../common/enums/config-key.enum";
-import type { RedisType } from "../types/redis.type";
+import { ConfigKeyConstant } from "../../../common/constants/config-key.constant";
+import type { RedisType } from "../types/types";
 
-export const redisRegister = registerAs(ConfigKeyEnum.Redis, (): RedisType => {
+const RedisRegister = registerAs(ConfigKeyConstant.redis, (): RedisType => {
 	const redisUrl = process.env.REDIS_URL;
 
 	if (!redisUrl) {
@@ -13,3 +13,5 @@ export const redisRegister = registerAs(ConfigKeyEnum.Redis, (): RedisType => {
 		redisUrl,
 	};
 });
+
+export { RedisRegister };

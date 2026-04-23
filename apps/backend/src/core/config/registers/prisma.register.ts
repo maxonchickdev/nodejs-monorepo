@@ -1,18 +1,17 @@
 import { registerAs } from "@nestjs/config";
-import { ConfigKeyEnum } from "../../../common/enums/config-key.enum";
-import type { PrismaType } from "../types/prisma.type";
+import { ConfigKeyConstant } from "../../../common/constants/config-key.constant";
+import type { PrismaType } from "../types/types";
 
-export const prismaRegister = registerAs(
-	ConfigKeyEnum.Prisma,
-	(): PrismaType => {
-		const postgresUrl = process.env.POSTGRES_URL;
+const PrismaRegister = registerAs(ConfigKeyConstant.prisma, (): PrismaType => {
+	const postgresUrl = process.env.POSTGRES_URL;
 
-		if (!postgresUrl) {
-			throw new Error("Missing some envs");
-		}
+	if (!postgresUrl) {
+		throw new Error("Missing some envs");
+	}
 
-		return {
-			postgresUrl,
-		};
-	},
-);
+	return {
+		postgresUrl,
+	};
+});
+
+export { PrismaRegister };

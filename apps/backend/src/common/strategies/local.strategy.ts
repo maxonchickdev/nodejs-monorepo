@@ -5,7 +5,7 @@ import { Strategy } from "passport-local";
 import { AuthRepository } from "../../modules/auth/auth.repository.js";
 
 @Injectable()
-export class LocalStrategy extends PassportStrategy(Strategy) {
+class LocalStrategy extends PassportStrategy(Strategy) {
 	constructor(
 		@Inject(AuthRepository) private readonly authRepository: AuthRepository,
 	) {
@@ -31,3 +31,5 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
 		return user.id;
 	}
 }
+
+export { LocalStrategy };

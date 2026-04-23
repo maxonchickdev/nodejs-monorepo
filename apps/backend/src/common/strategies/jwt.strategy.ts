@@ -4,15 +4,15 @@ import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import type { JwtType } from "../../core/config/types/jwt.type.js";
 import { AuthRepository } from "../../modules/auth/auth.repository.js";
-import { ConfigKeyEnum } from "../enums/config-key.enum.js";
+import { ConfigKeyConstant } from "../constants/config-key.constant.js";
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy, "jwt") {
+class JwtStrategy extends PassportStrategy(Strategy, "jwt") {
 	constructor(
 		@Inject(AuthRepository) private readonly authRepository: AuthRepository,
 		@Inject(ConfigService) readonly configService: ConfigService,
 	) {
-		const jwtConfig = configService.getOrThrow<JwtType>(ConfigKeyEnum.Jwt);
+		const jwtConfig = configService.getOrThrow<JwtType>(ConfigKeyConstant.jwt);
 
 		super({
 			ignoreExpiration: false,
@@ -31,3 +31,5 @@ export class JwtStrategy extends PassportStrategy(Strategy, "jwt") {
 		return payload.userId;
 	}
 }
+
+export { JwtStrategy };
