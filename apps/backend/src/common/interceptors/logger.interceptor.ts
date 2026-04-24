@@ -26,8 +26,7 @@ class LoggingInterceptor implements NestInterceptor {
 			ConfigKeyConstant.environment,
 		);
 
-		this.isProduction =
-			environmentConfig.nodeEnv === EnvironmentsConstant.production;
+		this.isProduction = environmentConfig.nodeEnv === EnvironmentsConstant.prod;
 	}
 
 	intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {

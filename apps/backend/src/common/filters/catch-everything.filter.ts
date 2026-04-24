@@ -44,8 +44,7 @@ class CatchEverythingFilter implements ExceptionFilter {
 			ConfigKeyConstant.environment,
 		);
 
-		this.isProduction =
-			environmentConfig.nodeEnv === EnvironmentsConstant.production;
+		this.isProduction = environmentConfig.nodeEnv === EnvironmentsConstant.prod;
 	}
 
 	catch(exception: unknown, host: ArgumentsHost): void {

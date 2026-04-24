@@ -28,7 +28,7 @@ import {
 				S3Register,
 			],
 			validationSchema: Joi.object({
-				NODE_ENV: Joi.string().default(EnvironmentsConstant.development),
+				NODE_ENV: Joi.string().default(EnvironmentsConstant.local),
 
 				APP_PORT: Joi.number().port().positive().required(),
 				APP_REQUEST_TIMEOUT: Joi.number().positive().required(),

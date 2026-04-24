@@ -1,7 +1,7 @@
 const EnvironmentsConstant = {
-	development: "development",
+	local: "local",
 	staging: "staging",
-	production: "production",
+	prod: "prod",
 };
 
 export { EnvironmentsConstant };

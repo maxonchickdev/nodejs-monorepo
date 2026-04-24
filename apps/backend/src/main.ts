@@ -33,8 +33,7 @@ const logger: Logger = new Logger("Bootstrap");
 		ConfigKeyConstant.environment,
 	);
 
-	const isProduction =
-		environmentConfig.nodeEnv === EnvironmentsConstant.production;
+	const isProduction = environmentConfig.nodeEnv === EnvironmentsConstant.prod;
 
 	const appConfig = configService.getOrThrow<AppType>(ConfigKeyConstant.app);
 
@@ -53,7 +52,7 @@ const logger: Logger = new Logger("Bootstrap");
 			.setVersion("1.0")
 			.addServer(
 				`http://localhost:${appConfig.appPort}`,
-				EnvironmentsConstant.development,
+				EnvironmentsConstant.local,
 			)
 			.addBearerAuth(
 				{

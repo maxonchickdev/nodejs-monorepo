@@ -45,36 +45,14 @@ services:
       start_period: 30s
     hostname: nodejs-monorepo-redis
 
-  # nodejs-monorepo-kafka-broker:
-  #   container_name: nodejs-monorepo-kafka-broker
-  #   image: apache/kafka:latest
-  #   ports:
-  #     - ${KAFKA_PORT}:${KAFKA_PORT}
-  #     - ${KAFKA_CONTROLLER_PORT}:${KAFKA_CONTROLLER_PORT}
-  #   environment:
-  #     KAFKA_NODE_ID: ${KAFKA_NODE_ID}
-  #     KAFKA_PROCESS_ROLES: broker,controller
-  #     KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:${KAFKA_PORT},CONTROLLER://0.0.0.0:${KAFKA_CONTROLLER_PORT}
-  #     KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://nodejs-monorepo-kafka-broker:${KAFKA_PORT}
-  #     KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-  #     KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
-  #     KAFKA_CONTROLLER_QUORUM_VOTERS: ${KAFKA_NODE_ID}@nodejs-monorepo-kafka-broker:${KAFKA_CONTROLLER_PORT}
-  #     KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: ${KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR}
-  #     KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: ${KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR}
-  #     KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: ${KAFKA_TRANSACTION_STATE_LOG_MIN_ISR}
-  #     KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: ${KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS}
-  #     KAFKA_NUM_PARTITIONS: ${KAFKA_NUM_PARTITIONS}
-  #   env_file: .env
-  #   networks:
-  #     - nodejs-monorepo-network
-  #   hostname: nodejs-monorepo-kafka-broker
-
   nodejs-monorepo:
     container_name: nodejs-monorepo
     build:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
+    ports:
+      - ${APP_PORT}:${APP_PORT}
     depends_on:
       nodejs-monorepo-postgres:
         condition: service_healthy

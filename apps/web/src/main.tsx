@@ -1,9 +1,9 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App.tsx";
+import { SignInRoute } from "./routes/sign-in/sign-in.route.tsx";
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
-		<App />
+		<SignInRoute />
 	</StrictMode>,
 );
