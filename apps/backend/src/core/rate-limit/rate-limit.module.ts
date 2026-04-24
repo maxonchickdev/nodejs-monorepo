@@ -34,6 +34,4 @@ import type { RateLimitType } from "../config/types/rate-limit.type.js";
 		},
 	],
 })
-class RateLimitModule {}
-
-export { RateLimitModule };
+export class RateLimitModule {}

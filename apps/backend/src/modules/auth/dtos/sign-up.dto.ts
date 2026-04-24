@@ -1,5 +1,6 @@
 // TODO: add validation messages
 import { ApiProperty, ApiSchema } from "@nestjs/swagger";
+import type { SignUpType } from "@nodejs-monorepo/shared";
 import {
 	IsEmail,
 	IsNotEmpty,
@@ -13,7 +14,7 @@ import {
 	description: "Sign up DTO",
 	name: "SignUpDto",
 })
-class SignUpDto {
+export class SignUpDto implements SignUpType {
 	@ApiProperty({
 		description: "Unique username",
 		example: "Eldred_Ondricka",
@@ -144,5 +145,3 @@ class SignUpDto {
 		this.password = password;
 	}
 }
-
-export { SignUpDto };

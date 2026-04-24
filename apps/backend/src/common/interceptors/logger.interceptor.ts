@@ -17,7 +17,7 @@ import { EnvironmentsConstant } from "../constants/environments.constant.js";
 type LoggerExpressionType = "incoming" | "error" | "success";
 
 @Injectable()
-class LoggingInterceptor implements NestInterceptor {
+export class LoggingInterceptor implements NestInterceptor {
 	private readonly logger = new Logger(LoggingInterceptor.name);
 	private readonly isProduction: boolean;
 
@@ -99,5 +99,3 @@ class LoggingInterceptor implements NestInterceptor {
 		}
 	}
 }
-
-export { LoggingInterceptor };

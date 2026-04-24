@@ -7,6 +7,4 @@ import { PrismaService } from "./prisma.service.js";
 	exports: [PrismaService],
 	providers: [PrismaService],
 })
-class PrismaModule {}
-
-export { PrismaModule };
+export class PrismaModule {}

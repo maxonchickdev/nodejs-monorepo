@@ -4,7 +4,7 @@ services:
     image: postgres:17.5-alpine3.22
     restart: always
     ports:
-      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     volumes:
       - nodejs-monorepo-postgres-data:/var/lib/postgresql/data
     environment:
@@ -12,7 +12,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
       PGUSER: ${POSTGRES_USER}
-    env_file: .env
+    env_file: apps/backend/.env
     networks:
       - nodejs-monorepo-network
     healthcheck:
@@ -28,17 +28,17 @@ services:
     image: redis:8.0.2-alpine
     restart: unless-stopped
     ports:
-      - ${REDIS_PORT}:${REDIS_PORT}
+      - "${REDIS_PORT}:${REDIS_PORT}"
     volumes:
       - nodejs-monorepo-redis-data:/data
     environment:
       REDIS_PORT: ${REDIS_PORT}
       REDIS_DATABASES: ${REDIS_DATABASES}
-    env_file: .env
+    env_file: apps/backend/.env
     networks:
       - nodejs-monorepo-network
     healthcheck:
-      test: redis-cli -a $REDIS_PASSWORD ping
+      test: ["CMD", "redis-cli", "ping"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -53,12 +53,12 @@ services:
       nodejs-monorepo-redis:
         condition: service_healthy
     ports:
-      - ${RI_PORT}:${RI_PORT}
+      - "${RI_PORT}:${RI_PORT}"
     volumes:
       - nodejs-monorepo-redis-insight-data:/usr/src/app/redisinsight/api/data
     environment:
       REDISINSIGHT_DISABLE_ENCRYPTION: ${RI_DISABLE_ENCRYPTION}
-    env_file: .env
+    env_file: apps/backend/.env
     networks:
       - nodejs-monorepo-network
     command: |

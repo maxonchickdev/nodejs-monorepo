@@ -18,7 +18,7 @@ import type { AppType } from "../../core/config/types/app.type.js";
 import { ConfigKeyConstant } from "../constants/config-key.constant.js";
 
 @Injectable()
-class TimeoutInterceptor implements NestInterceptor {
+export class TimeoutInterceptor implements NestInterceptor {
 	private readonly appRequestTimeout: number;
 
 	constructor(@Inject(ConfigService) readonly configService: ConfigService) {
@@ -42,5 +42,3 @@ class TimeoutInterceptor implements NestInterceptor {
 		);
 	}
 }
-
-export { TimeoutInterceptor };

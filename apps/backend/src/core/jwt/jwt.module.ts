@@ -25,6 +25,4 @@ import type { JwtType } from "../config/types/jwt.type.js";
 	],
 	exports: [CoreJwtModule],
 })
-class JwtModule {}
-
-export { JwtModule };
+export class JwtModule {}

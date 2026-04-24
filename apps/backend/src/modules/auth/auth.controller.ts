@@ -24,7 +24,7 @@ import { AuthRdo } from "./rdos/rdos";
 
 @ApiTags("Authentication & Authorization")
 @Controller("auth")
-class AuthController {
+export class AuthController {
 	constructor(@Inject(AuthService) private readonly authService: AuthService) {}
 
 	@Post("sign-in")
@@ -71,5 +71,3 @@ class AuthController {
 		return this.authService.signUp(signUpDto);
 	}
 }
-
-export { AuthController };

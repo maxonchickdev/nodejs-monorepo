@@ -13,11 +13,7 @@ const config: KnipConfig = {
 	},
 	workspaces: {
 		"apps/backend": {
-			entry: [
-				"src/main.ts",
-				"src/common/guards/jwt.guard.ts",
-				"src/common/enums/**/*.ts",
-			],
+			entry: ["src/main.ts", "src/common/guards/jwt.guard.ts"],
 			project: ["src/**/*.ts"],
 			ignoreDependencies: ["@aws-sdk/s3-request-presigner"],
 		},

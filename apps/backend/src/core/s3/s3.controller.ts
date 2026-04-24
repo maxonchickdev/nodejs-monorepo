@@ -18,7 +18,7 @@ import { S3Service } from "./s3.service";
 @UseGuards(JwtGuard)
 @ApiTags("Upload files")
 @Controller("s3")
-class S3Controller {
+export class S3Controller {
 	constructor(@Inject(S3Service) private readonly s3Service: S3Service) {}
 
 	@Post("upload-single-file")
@@ -56,5 +56,3 @@ class S3Controller {
 		return this.s3Service.uploadFile(file);
 	}
 }
-
-export { S3Controller };

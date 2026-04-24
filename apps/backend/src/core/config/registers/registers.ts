@@ -1,7 +1,7 @@
-export { AppRegister } from "./app.register";
-export { EnvironmentRegister } from "./environment.register";
-export { JwtRegister } from "./jwt.register";
-export { PrismaRegister } from "./prisma.register";
-export { RateLimitRegister } from "./rate-limit.register";
-export { RedisRegister } from "./redis.register";
-export { S3Register } from "./s3.register";
+export { appRegister } from "./app.register";
+export { environmentRegister } from "./environment.register";
+export { jwtRegister } from "./jwt.register";
+export { prismaRegister } from "./prisma.register";
+export { rateLimitRegister } from "./rate-limit.register";
+export { redisRegister } from "./redis.register";
+export { s3Register } from "./s3.register";

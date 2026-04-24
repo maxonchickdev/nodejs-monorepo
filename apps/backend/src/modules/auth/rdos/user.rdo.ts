@@ -6,7 +6,7 @@ import type { User } from "../../../../prisma/generated/client.js";
 	description: "User RDO",
 	name: "UserRdo",
 })
-class UserRdo implements User {
+export class UserRdo implements User {
 	@ApiProperty({
 		description: "User ID",
 		nullable: false,
@@ -105,5 +105,3 @@ class UserRdo implements User {
 		this.updatedAt = updatedAt;
 	}
 }
-
-export { UserRdo };

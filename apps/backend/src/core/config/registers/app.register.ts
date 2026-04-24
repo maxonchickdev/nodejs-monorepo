@@ -2,7 +2,7 @@ import { registerAs } from "@nestjs/config";
 import { ConfigKeyConstant } from "../../../common/constants/config-key.constant.js";
 import type { AppType } from "../types/types.js";
 
-const AppRegister = registerAs(ConfigKeyConstant.app, (): AppType => {
+export const appRegister = registerAs(ConfigKeyConstant.app, (): AppType => {
 	const appDescription = process.env.APP_DESCRIPTION;
 	const appName = process.env.APP_NAME;
 	const appPort = Number(process.env.APP_PORT);
@@ -36,5 +36,3 @@ const AppRegister = registerAs(ConfigKeyConstant.app, (): AppType => {
 		appCorsOrigin,
 	};
 });
-
-export { AppRegister };

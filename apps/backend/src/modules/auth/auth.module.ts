@@ -14,6 +14,4 @@ import { AuthService } from "./auth.service.js";
 	imports: [JwtModule, PassportModule, PrismaModule, ConfigModule],
 	providers: [AuthService, AuthRepository, JwtStrategy, LocalStrategy],
 })
-class AuthModule {}
-
-export { AuthModule };
+export class AuthModule {}

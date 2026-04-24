@@ -12,7 +12,7 @@ import { ConfigKeyConstant } from "../../common/constants/config-key.constant";
 import type { S3Type } from "../config/types/s3.type";
 
 @Injectable()
-class S3Service {
+export class S3Service {
 	private readonly s3Client: S3Client;
 	private readonly bucketName: string;
 	private readonly region: string;
@@ -64,5 +64,3 @@ class S3Service {
 		};
 	}
 }
-
-export { S3Service };

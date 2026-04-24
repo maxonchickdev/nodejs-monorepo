@@ -12,7 +12,7 @@ import type { Redis } from "ioredis";
 import { PrismaService } from "../prisma/prisma.service.js";
 
 @Injectable()
-class HealthChecksService {
+export class HealthChecksService {
 	constructor(
 		@InjectRedis() private readonly redis: Redis,
 		@Inject(HealthCheckService)
@@ -46,5 +46,3 @@ class HealthChecksService {
 		}
 	}
 }
-
-export { HealthChecksService };

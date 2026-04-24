@@ -10,6 +10,4 @@ import { HealthChecksService } from "./health-checks.service.js";
 	imports: [TerminusModule, PrismaModule, RedisModule],
 	providers: [HealthChecksService],
 })
-class HealthChecksModule {}
-
-export { HealthChecksModule };
+export class HealthChecksModule {}

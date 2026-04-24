@@ -9,6 +9,4 @@ import { S3Service } from "./s3.service";
 	exports: [S3Service],
 	controllers: [S3Controller],
 })
-class S3Module {}
-
-export { S3Module };
+export class S3Module {}

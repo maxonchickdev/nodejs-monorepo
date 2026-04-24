@@ -11,7 +11,7 @@ import { ConfigKeyConstant } from "../../common/constants/config-key.constant.js
 import type { PrismaType } from "../config/types/prisma.type.js";
 
 @Injectable()
-class PrismaService
+export class PrismaService
 	extends PrismaClient
 	implements OnModuleInit, OnModuleDestroy
 {
@@ -34,5 +34,3 @@ class PrismaService
 		await this.$disconnect();
 	}
 }
-
-export { PrismaService };

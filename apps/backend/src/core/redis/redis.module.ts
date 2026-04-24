@@ -28,6 +28,4 @@ import { RedisService } from "./redis.service.js";
 	],
 	providers: [RedisService],
 })
-class RedisModule {}
-
-export { RedisModule };
+export class RedisModule {}

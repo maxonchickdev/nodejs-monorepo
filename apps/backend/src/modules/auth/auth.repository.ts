@@ -4,7 +4,7 @@ import type { SignUpDto } from "./dtos/sign-up.dto.js";
 import type { UserRdo } from "./rdos/rdos.js";
 
 @Injectable()
-class AuthRepository {
+export class AuthRepository {
 	constructor(
 		@Inject(PrismaService) private readonly prismaService: PrismaService,
 	) {}
@@ -31,5 +31,3 @@ class AuthRepository {
 		});
 	}
 }
-
-export { AuthRepository };

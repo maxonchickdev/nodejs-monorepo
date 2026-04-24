@@ -1,4 +1,4 @@
-const ConfigKeyConstant = {
+export const ConfigKeyConstant = {
 	redis: "redis",
 	app: "app",
 	environment: "environment",
@@ -7,5 +7,3 @@ const ConfigKeyConstant = {
 	rateLimit: "rate-limit",
 	s3: "s3",
 };
-
-export { ConfigKeyConstant };

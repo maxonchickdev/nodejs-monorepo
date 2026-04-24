@@ -2,7 +2,7 @@ import { registerAs } from "@nestjs/config";
 import { ConfigKeyConstant } from "../../../common/constants/config-key.constant";
 import type { RateLimitType } from "../types/types";
 
-const RateLimitRegister = registerAs(
+export const rateLimitRegister = registerAs(
 	ConfigKeyConstant.rateLimit,
 	(): RateLimitType => {
 		const limit = Number(process.env.THROTTLE_LIMIT);
@@ -18,5 +18,3 @@ const RateLimitRegister = registerAs(
 		};
 	},
 );
-
-export { RateLimitRegister };

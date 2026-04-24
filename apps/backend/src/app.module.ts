@@ -7,6 +7,4 @@ import { AuthModule } from "./modules/auth/auth.module.js";
 @Module({
 	imports: [HealthChecksModule, AuthModule, S3Module, RateLimitModule],
 })
-class AppModule {}
-
-export { AppModule };
+export class AppModule {}

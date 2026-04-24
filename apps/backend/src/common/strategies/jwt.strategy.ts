@@ -7,7 +7,7 @@ import { AuthRepository } from "../../modules/auth/auth.repository.js";
 import { ConfigKeyConstant } from "../constants/config-key.constant.js";
 
 @Injectable()
-class JwtStrategy extends PassportStrategy(Strategy, "jwt") {
+export class JwtStrategy extends PassportStrategy(Strategy, "jwt") {
 	constructor(
 		@Inject(AuthRepository) private readonly authRepository: AuthRepository,
 		@Inject(ConfigService) readonly configService: ConfigService,
@@ -31,5 +31,3 @@ class JwtStrategy extends PassportStrategy(Strategy, "jwt") {
 		return payload.userId;
 	}
 }
-
-export { JwtStrategy };

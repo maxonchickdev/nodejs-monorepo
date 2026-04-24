@@ -10,7 +10,7 @@ import type { SignUpDto } from "./dtos/sign-up.dto.js";
 import { AuthRdo } from "./rdos/auth.rdo.js";
 
 @Injectable()
-class AuthService {
+export class AuthService {
 	private readonly jwtSecret: string;
 
 	constructor(
@@ -67,5 +67,3 @@ class AuthService {
 		return this.jwtService.sign({ userId });
 	}
 }
-
-export { AuthService };

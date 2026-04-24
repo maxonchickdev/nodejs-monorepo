@@ -6,7 +6,7 @@ import { HealthChecksService } from "./health-checks.service.js";
 
 @ApiTags("Health Checks")
 @Controller("health-checks")
-class HealthChecksController {
+export class HealthChecksController {
 	constructor(
 		@Inject(HealthChecksService)
 		private readonly healthChecksService: HealthChecksService,
@@ -17,5 +17,3 @@ class HealthChecksController {
 		return this.healthChecksService.check();
 	}
 }
-
-export { HealthChecksController };

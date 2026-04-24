@@ -2,7 +2,7 @@ import { registerAs } from "@nestjs/config";
 import { ConfigKeyConstant } from "../../../common/constants/config-key.constant";
 import type { S3Type } from "../types/types";
 
-const S3Register = registerAs(ConfigKeyConstant.s3, (): S3Type => {
+export const s3Register = registerAs(ConfigKeyConstant.s3, (): S3Type => {
 	const awsRegion = process.env.AWS_REGION;
 	const awsAccessKeyId = process.env.AWS_ACCESS_KEY_ID;
 	const awsSecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
@@ -24,5 +24,3 @@ const S3Register = registerAs(ConfigKeyConstant.s3, (): S3Type => {
 		awsS3BucketName,
 	};
 });
-
-export { S3Register };

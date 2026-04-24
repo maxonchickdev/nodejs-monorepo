@@ -32,7 +32,7 @@ const INTERNAL_ERROR_MESSAGE = "Internal server error";
 const INTERNAL_ERROR_TYPE = "InternalServerErrorException";
 
 @Catch()
-class CatchEverythingFilter implements ExceptionFilter {
+export class CatchEverythingFilter implements ExceptionFilter {
 	private readonly logger = new Logger(CatchEverythingFilter.name);
 	private readonly isProduction;
 
@@ -210,5 +210,3 @@ class CatchEverythingFilter implements ExceptionFilter {
 		);
 	}
 }
-
-export { CatchEverythingFilter };

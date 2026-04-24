@@ -4,28 +4,28 @@ import { ConfigModule as CoreConfigModule } from "@nestjs/config";
 import Joi from "joi";
 import { EnvironmentsConstant } from "../../common/constants/environments.constant";
 import {
-	AppRegister,
-	EnvironmentRegister,
-	JwtRegister,
-	PrismaRegister,
-	RateLimitRegister,
-	RedisRegister,
-	S3Register,
+	appRegister,
+	environmentRegister,
+	jwtRegister,
+	prismaRegister,
+	rateLimitRegister,
+	redisRegister,
+	s3Register,
 } from "./registers/registers";
 
 @Module({
 	imports: [
 		CoreConfigModule.forRoot({
-			envFilePath: ["../../.env"],
+			envFilePath: [".env"],
 			isGlobal: false,
 			load: [
-				RedisRegister,
-				AppRegister,
-				PrismaRegister,
-				EnvironmentRegister,
-				JwtRegister,
-				RateLimitRegister,
-				S3Register,
+				redisRegister,
+				appRegister,
+				prismaRegister,
+				environmentRegister,
+				jwtRegister,
+				rateLimitRegister,
+				s3Register,
 			],
 			validationSchema: Joi.object({
 				NODE_ENV: Joi.string().default(EnvironmentsConstant.local),
@@ -62,6 +62,4 @@ import {
 	],
 	exports: [CoreConfigModule],
 })
-class ConfigModule {}
-
-export { ConfigModule };
+export class ConfigModule {}

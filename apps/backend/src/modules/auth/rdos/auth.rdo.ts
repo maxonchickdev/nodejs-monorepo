@@ -4,7 +4,7 @@ import { ApiProperty, ApiSchema } from "@nestjs/swagger";
 	description: "Auth RDO",
 	name: "AuthRdo",
 })
-class AuthRdo {
+export class AuthRdo {
 	@ApiProperty({
 		example: "",
 		name: "accessToken",
@@ -18,5 +18,3 @@ class AuthRdo {
 		this.accessToken = accessToken;
 	}
 }
-
-export { AuthRdo };
