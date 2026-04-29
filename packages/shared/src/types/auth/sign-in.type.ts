@@ -1,3 +1,3 @@
-import type { SignUpType } from "./sign-up.type";
+import type { SignUpType } from "../..";
 
 export type SignInType = Pick<SignUpType, "email" | "password">;

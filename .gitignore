@@ -103,3 +103,5 @@ vite.config.ts.timestamp-*
 .vscode
 
 apps/backend/prisma/generated
+
+*.pem

@@ -1,7 +1,7 @@
 import { join } from "node:path";
 import { defineConfig, env } from "prisma/config";
 
-process.loadEnvFile(join(__dirname, ".env"));
+process.loadEnvFile(join(__dirname, "..", "..", ".env"));
 
 export default defineConfig({
 	datasource: {

@@ -1,1 +1,1 @@
-export { SignInType, SignUpType } from "./auth/index";
+export { SignInType, SignUpType } from "./types";
